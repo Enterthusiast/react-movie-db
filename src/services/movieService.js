@@ -12,45 +12,69 @@ const movieService = function() {
                     response = await fetch(request);
                     json = await response.json();
     
+                    this.latestResponse = response;
+    
                     if(!response || response.status >= 400 || response.status === 0) {
-                        throw(json);
+                        throw new Error(json);
                     } else { 
-                        response = json;
+                        return json;
                     }
                 } catch(error) {
-                    response = error;
+                    throw new Error(error);
                 }
-    
-                this.latestResponse = response;
-                return response;
             } else {
-                throw({message: 'The API is not initialized, run getConfiguration first'})
+                throw new Error({message: 'The API is not initialized, run getConfiguration first'});
             }
         },
-        getConfiguration: async function() {
-            let response = {};
+        addImagePath(results) {
+            if(this.ready) {
+                results = results.map(result => {
+                    let resultWithPath = {
+                        ...result
+                    }
 
+                    if(resultWithPath.backdrop_path) {
+                        resultWithPath.backdrop_path = `${this.configuration.images.secure_base_url}${this.configuration.images.backdrop_sizes[1]}${result.backdrop_path}`;
+                    }
+                    if(resultWithPath.logo_path) {
+                        resultWithPath.logo_path = `${this.configuration.images.secure_base_url}${this.configuration.images.logo_sizes[1]}${result.logo_path}`;
+                    }
+                    if(resultWithPath.poster_path) {
+                        resultWithPath.poster_path = `${this.configuration.images.secure_base_url}${this.configuration.images.poster_sizes[2]}${result.poster_path}`;
+                    }
+                    if(resultWithPath.profile_path) {
+                        resultWithPath.profile_path = `${this.configuration.images.secure_base_url}${this.configuration.images.profile_sizes[1]}${result.profile_path}`;
+                    }
+                    if(resultWithPath.still_path) {
+                        resultWithPath.still_path = `${this.configuration.images.secure_base_url}${this.configuration.images.still_sizes[2]}${result.still_path}`;
+                }
+    
+                    return {
+                        ...resultWithPath,
+                    }
+                })
+            }
+            return results;
+        },
+        getConfiguration: async function() {
             const request = `https://api.themoviedb.org/3/configuration?${this.key}`
             try {
                 this.configuration = await this.requestWrapper(request, true);
-                response = this.configuration;
                 this.ready = true;
+                return this.configuration;
             } catch (error) {
-                response = error;
+                throw new Error(error);
             }
-            
-            return response;
         },
         getMovieNowPlaying: async function() {
-            let response = {};
-
             const request = `https://api.themoviedb.org/3/movie/now_playing?${this.key}`
             try {
-                response = await this.requestWrapper(request);
+                let response = await this.requestWrapper(request);
+                response.results = this.addImagePath(response.results);
+                return response;
             } catch(error) {
-                response = error;
+                throw new Error(error);
             }
-            return response;
         },
         latestResponse: {},
         configuration: {},
