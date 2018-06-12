@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import movieService from './services/movie-api';
+import movieService from './services/movieService';
 
 class App extends Component {
   constructor(props) {
@@ -16,19 +16,32 @@ class App extends Component {
     this.getMovieServiceConfiguration = this.getMovieServiceConfiguration.bind(this);
 
     // init
-    this.getMovieServiceConfiguration();
+    this.getMovieServiceConfiguration().then(() => {
+      this.getMovieNowPlaying();
+    });
   }
 
-  getMovieServiceConfiguration() {
-    movieService.getConfiguration().then(() => {
-      console.log('config fetched');
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiReady: movieService.ready
-        } 
-      })
-    });
+  async getMovieServiceConfiguration() {
+
+    await movieService.getConfiguration();
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        apiReady: movieService.ready,
+      } 
+    })
+  }
+
+  async getMovieNowPlaying() {
+
+    const movieList = await movieService.getMovieNowPlaying();
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        movieList,
+        apiReady: movieService.ready,
+      } 
+    })
   }
 
   render() {
@@ -47,6 +60,10 @@ class App extends Component {
               API configuration dump:
               <br/>
               {JSON.stringify(this.state.movieService.configuration)}
+              <br/>
+              movie now playing list dump:
+              <br/>
+              {JSON.stringify(this.state.movieList)}
             </React.Fragment> 
             : 
             <React.Fragment>
@@ -54,7 +71,9 @@ class App extends Component {
               <br/>
               Couldn't reach the API to get the configuration:
               <br/>
-              <button onClick={this.getMovieServiceConfiguration}>Refresh</button>
+              {JSON.stringify(this.state.movieService.latestResponse)}
+              <br/>
+              <button onClick={this.getMovieServiceConfiguration}>Retry</button>
             </React.Fragment>}
         </p>
       </div>
