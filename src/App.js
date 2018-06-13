@@ -4,6 +4,7 @@ import './App.css';
 import movieService from './services/movieService';
 import Pagination from './components/pagination';
 import MovieList from './components/movieList';
+import MovieDetailsContext from './contexts/movieDetailsContext';
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +14,18 @@ class App extends Component {
       movieList: {
         results: []
       },
+      movieDetails: {},
       apiReady: false
     }
 
     // bindings
     this.getMovieServiceConfiguration = this.getMovieServiceConfiguration.bind(this);
+    this.getMovieNowPlaying = this.getMovieNowPlaying.bind(this);
+    this.getMovieDetails = this.getMovieDetails.bind(this);
+    this.deleteMovieDetails = this.deleteMovieDetails.bind(this);
+  }
 
+  componentWillMount() {
     // init
     this.getMovieServiceConfiguration().then(() => {
       this.getMovieNowPlaying();
@@ -45,13 +52,35 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          movieList,
-          apiReady: movieService.ready,
+          movieList
         } 
       })
     } catch(error) {
       console.error(new Error(error));
     }
+  }
+
+  async getMovieDetails(id) {
+    try {
+      const movieDetails = await movieService.getMovieDetails(id);
+      this.setState((prevState, props) => {
+        return { 
+          ...prevState,
+          movieDetails
+        } 
+      })
+    } catch(error) {
+      console.error(new Error(error));
+    }
+  }
+
+  deleteMovieDetails() {
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        movieDetails: {}
+      } 
+    })
   }
 
   render() {
@@ -65,7 +94,9 @@ class App extends Component {
             <React.Fragment>
               <h2>In Theater</h2>
               <Pagination/>
-              <MovieList movieList={this.state.movieList.results} />
+              <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
+                <MovieList movieList={this.state.movieList.results} />
+              </MovieDetailsContext.Provider>
             </React.Fragment> 
             : 
             <React.Fragment>

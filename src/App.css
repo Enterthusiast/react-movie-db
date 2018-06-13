@@ -15,3 +15,39 @@
 .App-card-secondary-content {
   margin: 0 0 8px 0;
 }
+
+.App-modal-poster {
+  margin: 35px 15px 30px 15px;
+}
+
+.App-modal-backdrop-alpha {
+  width: 100%;
+  background-size: cover;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5) 0%,rgba(0, 0, 0, 0.5) 0%);
+}
+
+.App-modal-content {
+  font-size: 18px;
+}
+
+.App-modal-secondary-content {
+  
+}
+
+.modal {
+  width: 90%;
+  max-width: 1280px;
+}
+
+.modal-content {
+  padding: 0 !important;
+}
+
+.modal-content h4 {
+  display: none;
+}
+
+.modal-container {
+  width: 90%;
+  margin: 10px auto;
+}

@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import MovieMoreInfoModal from './movieMoreInfoModal';
+
 const MovieListItem = (props) => 
     <div className="card horizontal">
         <div className="card-image">
             <img src={props.movieListItem.poster_path} alt={`${props.movieListItem.title} Poster`}/>
         </div>
-        <div class="card-stacked">
+        <div className="card-stacked">
             <div className="card-content">
                 <h3 className="App-card-title">{props.movieListItem.title}</h3>
                 <div className="App-card-secondary-content">
@@ -21,11 +23,11 @@ const MovieListItem = (props) =>
                     </div>
                 </div>
                 <p className="App-content-text-color">
-                    {props.movieListItem.overview.length > 256 ? props.movieListItem.overview.substr(0, 256)+'...' : props.movieListItem.overview}
+                    {props.movieListItem.overview.length > 196 ? props.movieListItem.overview.substr(0, 196)+'...' : props.movieListItem.overview}
                 </p>
             </div>
-            <div class="card-action">
-                <a href="#">More info</a>
+            <div className="card-action">
+                <MovieMoreInfoModal movieId={props.movieListItem.id}/>
             </div>
         </div>
     </div>;
