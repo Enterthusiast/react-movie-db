@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MovieListItem from "./movieListItem";
 
-export default (props) => {
-    return props.movieList ? props.movieList.map(movieListItem => {
-        return <MovieListItem key={movieListItem.id+movieListItem.original_title} movieListItem={movieListItem} />
-    })
+const MovieList = (props) =>
+    props.movieList ? props.movieList.map(movieListItem => <MovieListItem key={movieListItem.id+movieListItem.original_title} movieListItem={movieListItem} />)
     :
-    'No result'
+    'No result';
+
+MovieList.propTypes = {
+    movieList: PropTypes.array.isRequired
 }
+
+export default MovieList;

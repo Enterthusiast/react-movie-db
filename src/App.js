@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import movieService from './services/movieService';
+import Pagination from './components/pagination';
 import MovieList from './components/movieList';
 
 class App extends Component {
@@ -56,15 +56,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Movie DB</h1>
+      <div className="container">
+        <header>
+          <h1>Welcome to Movie DB</h1>
         </header>
-        <div className="App-intro">
+        <div>
           {this.state.apiReady ? 
             <React.Fragment>
-              <h1>In Theater</h1>
+              <h2>In Theater</h2>
+              <Pagination/>
               <MovieList movieList={this.state.movieList.results} />
             </React.Fragment> 
             : 
