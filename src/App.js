@@ -87,12 +87,11 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Welcome to Movie DB</h1>
+          <h1>Movies in theater</h1>
         </header>
         <div>
           {this.state.apiReady ? 
             <React.Fragment>
-              <h2>In Theater</h2>
               <Pagination/>
               <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
                 <MovieList movieList={this.state.movieList.results} />
