@@ -48,7 +48,7 @@ const MovieMoreInfo = (props) =>
                                             return previous;
                                         }, [])
                                         .map((result, index) => 
-                                            <span key={result.key}>{index > 0 ? ', ': ''}<a href={`https://youtube.com/watch?v=${result.key}`}>{result.name}</a></span>)
+                                            <span key={result.key}>{index > 0 ? ', ': ''}<a href={`https://youtube.com/watch?v=${result.key}`} target="_blank">{result.name}</a></span>)
                                         : 
                                         ''
                                     }
@@ -66,9 +66,9 @@ const MovieMoreInfo = (props) =>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">open_in_new</i>
-                                <span className="App-secondary-text-color"><a href={props.movieDetails.homepage}>Official Website</a></span>
+                                <span className="App-secondary-text-color"><a href={props.movieDetails.homepage} target="_blank">Official Website</a></span>
                                 <span>,&nbsp;</span>
-                                <span className="App-secondary-text-color"><a href={`https://www.imdb.com/title/${props.movieDetails.imdb_id}`}>Imdb</a></span>
+                                <span className="App-secondary-text-color"><a href={`https://www.imdb.com/title/${props.movieDetails.imdb_id}`} target="_blank">Imdb</a></span>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">monetization_on</i>
