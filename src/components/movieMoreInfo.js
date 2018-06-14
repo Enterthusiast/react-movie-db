@@ -73,7 +73,7 @@ const MovieMoreInfo = (props) =>
                             <div className="valign-wrapper">
                                 <i className="material-icons">monetization_on</i>
                                 <span className="App-secondary-text-color">
-                                    {props.movieDetails.revenue.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumSignificantDigits: 4 })}
+                                    {props.movieDetails.revenue ? props.movieDetails.revenue.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumSignificantDigits: 4 }) : 'Unknown'}
                                 </span>
                             </div>
                         </div>
