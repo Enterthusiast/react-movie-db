@@ -30,8 +30,16 @@
   font-size: 18px;
 }
 
-.App-modal-secondary-content {
-  
+.App-modal-content h3:first-of-type {
+  margin-bottom: 0;
+}
+
+.App-modal-content h5:first-of-type {
+  margin-top: 0;
+}
+
+.App-modal-movie-date {
+  font-size: 18px;
 }
 
 .modal {
@@ -43,7 +51,7 @@
   padding: 0 !important;
 }
 
-.modal-content h4 {
+.modal-content h4:first-of-type {
   display: none;
 }
 

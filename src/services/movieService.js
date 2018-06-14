@@ -93,7 +93,7 @@ const movieService = function() {
             }
         },
         getMovieDetails: async function(id) {
-            const request = `https://api.themoviedb.org/3/movie/${id}?${this.key}`
+            const request = `https://api.themoviedb.org/3/movie/${id}?${this.key}&append_to_response=videos,credits`
             try {
                 let response = await this.requestWrapper(request);
                 response = this.addImagePath(response);
