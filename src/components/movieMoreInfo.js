@@ -48,7 +48,7 @@ const MovieMoreInfo = (props) =>
                                             return previous;
                                         }, [])
                                         .map((result, index) => 
-                                            <span>{index > 0 ? ', ': ''}<a href={`https://youtube.com/watch?v=${result.key}`}>{result.name}</a></span>)
+                                            <span key={result.key}>{index > 0 ? ', ': ''}<a href={`https://youtube.com/watch?v=${result.key}`}>{result.name}</a></span>)
                                         : 
                                         ''
                                     }
@@ -58,7 +58,7 @@ const MovieMoreInfo = (props) =>
                                 <i className="material-icons">local_offer</i>
                                 <span className="App-secondary-text-color">
                                     {props.movieDetails.genres ? 
-                                        props.movieDetails.genres.map((genre, index) => <span>{index > 0 ? ', ': ''}{genre.name}</span>)
+                                        props.movieDetails.genres.map((genre, index) => <span key={index}>{index > 0 ? ', ': ''}{genre.name}</span>)
                                         : 
                                         ''
                                     }
@@ -86,7 +86,7 @@ const MovieMoreInfo = (props) =>
                             {(props.movieDetails.credits && props.movieDetails.credits.cast) ? 
                                 props.movieDetails.credits.cast.map((credit, index) => 
                                     index < 5 ? 
-                                    <li>
+                                    <li key={index}>
                                         <b>{credit.name}</b> ({credit.character})
                                     </li>
                                     : 
