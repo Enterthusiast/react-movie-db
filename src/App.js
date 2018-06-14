@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import {ProgressBar, Button} from 'react-materialize';
+
 import movieService from './services/movieService';
 import Pagination from './components/pagination';
 import MovieList from './components/movieList';
@@ -15,7 +17,8 @@ class App extends Component {
         results: []
       },
       movieDetails: {},
-      apiReady: false
+      apiReady: false,
+      apiError: false
     }
 
     // bindings
@@ -39,10 +42,17 @@ class App extends Component {
         return { 
           ...prevState,
           apiReady: movieService.ready,
+          apiError: false
         } 
       })
     } catch(error) {
       console.error(new Error(error));
+      this.setState((prevState, props) => {
+        return { 
+          ...prevState,
+          apiError: true
+        } 
+      })
     }
   }
 
@@ -52,11 +62,18 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          movieList
+          movieList,
+          apiError: false
         } 
       })
     } catch(error) {
       console.error(new Error(error));
+      this.setState((prevState, props) => {
+        return { 
+          ...prevState,
+          apiError: true
+        } 
+      })
     }
   }
 
@@ -66,11 +83,18 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          movieDetails
+          movieDetails,
+          apiError: false
         } 
       })
     } catch(error) {
       console.error(new Error(error));
+      this.setState((prevState, props) => {
+        return { 
+          ...prevState,
+          apiError: true
+        } 
+      })
     }
   }
 
@@ -97,16 +121,25 @@ class App extends Component {
                 <MovieList movieList={this.state.movieList.results} />
               </MovieDetailsContext.Provider>
             </React.Fragment> 
-            : 
-            <React.Fragment>
-              <br/>
-              <br/>
-              Couldn't reach the API to get the configuration.
-              <br/>
-              Error dump: {JSON.stringify(this.state.movieService.latestResponse)}
-              <br/>
-              <button onClick={this.getMovieServiceConfiguration}>Retry</button>
-            </React.Fragment>}
+            : this.state.apiError ?
+              <div className="card horizontal">
+                <div className="card-content">
+                <p>
+                  <b>Couldn't reach the API to get the configuration.</b>
+                </p>
+                <br />
+                <p>
+                  Error dump:
+                  <br />
+                  {JSON.stringify(this.state.movieService.latestResponse)}
+                </p>
+                <br />
+                <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+                </div>
+              </div>
+              :
+              <ProgressBar />
+            }
         </div>
       </div>
     );

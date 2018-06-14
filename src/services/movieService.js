@@ -12,7 +12,7 @@ const movieService = function() {
                     response = await fetch(request);
                     json = await response.json();
     
-                    this.latestResponse = response;
+                    this.latestResponse = json;
     
                     if(!response || response.status >= 400 || response.status === 0) {
                         throw new Error(json);
