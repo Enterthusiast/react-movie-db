@@ -82,8 +82,8 @@ const movieService = function() {
                 throw new Error(error);
             }
         },
-        getMovieNowPlaying: async function() {
-            const request = `https://api.themoviedb.org/3/movie/now_playing?${this.key}`
+        getMovieNowPlaying: async function(page) {
+            const request = `https://api.themoviedb.org/3/movie/now_playing?${this.key}&page=${page ? page : 1}`
             try {
                 let response = await this.requestWrapper(request);
                 response.results = this.addImagePath(response.results);

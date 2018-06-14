@@ -16,6 +16,13 @@ class App extends Component {
       movieList: {
         results: []
       },
+      movieListPagination: {
+				previous: 0,
+				list: [0],
+				next: 0,
+				current: 0,
+				total: 1
+			},
       movieDetails: {},
       apiReady: false,
       apiError: false
@@ -56,13 +63,48 @@ class App extends Component {
     }
   }
 
-  async getMovieNowPlaying() {
+  paginationDataBuilder(dataList) {
+    const pagePrevious = (dataList.page - 1) > 0 ? dataList.page - 1 : null;
+    const pageNext = (dataList.page + 1) < dataList.total_pages ? dataList.page + 1 : null;
+    
+    let pageList = [];
+    if(dataList.page - 2 < 1) {
+      for(let i = 1; i < Math.min(5, dataList.total_pages); i++) {
+        pageList.push(i);
+      }
+    } else if (dataList.page + 2 >= dataList.total_pages) {
+      for(let i = Math.max(1, dataList.total_pages - 2); i <= dataList.total_pages; i++) {
+        pageList.push(i);
+      }
+    } else {
+      for(let i = dataList.page - 2; i <= dataList.page + 2; i++) {
+        pageList.push(i);
+      }
+    }
+    return {
+      pagePrevious,
+      pageNext,
+      pageList
+    }
+  }
+
+  async getMovieNowPlaying(page) {
     try {
-      const movieList = await movieService.getMovieNowPlaying();
+      const movieList = await movieService.getMovieNowPlaying(page);
+
+      const { pagePrevious, pageNext, pageList } = this.paginationDataBuilder(movieList);
+
       this.setState((prevState, props) => {
         return { 
           ...prevState,
           movieList,
+          movieListPagination: {
+            previous: pagePrevious,
+            list: pageList,
+            next: pageNext,
+            current: movieList.page,
+            total: movieList.total_pages
+          },
           apiError: false
         } 
       })
@@ -115,13 +157,32 @@ class App extends Component {
         </header>
         <div>
           {this.state.apiReady ? 
-            <React.Fragment>
-              <Pagination/>
-              <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
-                <MovieList movieList={this.state.movieList.results} />
-              </MovieDetailsContext.Provider>
-            </React.Fragment> 
-            : this.state.apiError ?
+            this.state.apiError ?
+              <div className="card horizontal">
+                <div className="card-content">
+                <p>
+                  <b>API Error.</b>
+                </p>
+                <br />
+                <p>
+                  Error dump:
+                  <br />
+                  {JSON.stringify(this.state.movieService.latestResponse)}
+                </p>
+                <br />
+                <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+                </div>
+              </div>
+              :
+              <React.Fragment>
+                <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+                <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
+                  <MovieList movieList={this.state.movieList.results} />
+                </MovieDetailsContext.Provider>
+                <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+              </React.Fragment> 
+            :
+            this.state.apiError ?
               <div className="card horizontal">
                 <div className="card-content">
                 <p>

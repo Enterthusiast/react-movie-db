@@ -4,6 +4,15 @@
   font-weight: 300;
 }
 
+.App-poster-image {
+  width: 185px;
+  height: 278px;
+}
+
+.App-backdrop-image {
+  height: 343px;
+}
+
 .App-content-text-color {
   color: #4d4d4d;
 }

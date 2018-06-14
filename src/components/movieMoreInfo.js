@@ -13,8 +13,8 @@ const MovieMoreInfo = (props) =>
                     backgroundSize: 'cover',
                     backgroundImage: `url(${props.movieDetails.backdrop_path})`}}>
 
-                    <div className="App-modal-backdrop-alpha">
-                        <img className="App-modal-poster" src={props.movieDetails.poster_path} alt={`${props.movieDetails.title} Poster`}/>
+                    <div className="App-modal-backdrop-alpha App-backdrop-image">
+                        <img className="App-modal-poster" src={props.movieDetails.poster_path ? props.movieDetails.poster_path : ""} alt={`${props.movieDetails.title} Poster`} onError={(e)=> e.target.parentNode.removeChild(e.target)}/>
                     </div>
                 </div>
                 <div className="modal-container App-modal-content">

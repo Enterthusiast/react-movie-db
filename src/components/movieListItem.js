@@ -5,8 +5,8 @@ import MovieMoreInfoModal from './movieMoreInfoModal';
 
 const MovieListItem = (props) => 
     <div className="card horizontal">
-        <div className="card-image">
-            <img src={props.movieListItem.poster_path} alt={`${props.movieListItem.title} Poster`}/>
+        <div className="card-image App-poster-image">
+            <img src={props.movieListItem.poster_path ? props.movieListItem.poster_path : ""} alt={`${props.movieListItem.title} Poster`} onError={(e)=> e.target.parentNode.removeChild(e.target)}/>
         </div>
         <div className="card-stacked">
             <div className="card-content">
