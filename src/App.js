@@ -20,7 +20,7 @@ class App extends Component {
 				previous: 0,
 				list: [0],
 				next: 0,
-				current: 0,
+				current: 1,
 				total: 1
 			},
       movieDetails: {},

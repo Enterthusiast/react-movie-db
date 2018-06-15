@@ -4,29 +4,40 @@ const movieService = function() {
 
     let service = {
         requestWrapper: async function(request, initialize) {
-            if(this.ready || initialize) {
-                let response = {};
-                let json = {};
-    
-                try {
-                    response = await fetch(request);
-                    json = await response.json();
-    
-                    this.latestResponse = json;
-    
-                    if(!response || response.status >= 400 || response.status === 0) {
-                        throw new Error(json);
-                    } else { 
-                        return json;
-                    }
-                } catch(error) {
-                    throw new Error(error);
-                }
-            } else {
-                throw new Error({message: 'The API is not initialized, run getConfiguration first'});
+            if(!request){
+                throw new Error('Missing request');
             }
+
+            if(!this.ready && !initialize){
+                throw new Error('The API is not initialized, run getConfiguration first');
+            }
+
+            let response = {};
+            let json = {};
+
+            try {
+                response = await fetch(request);
+
+                if(response.status >= 400 || response.status === 0) {
+                    throw new Error(json);
+                }
+
+                json = await response.json();
+
+                console.log('json', json)
+                
+                return json;
+
+            } catch(error) {
+                throw new Error(error);
+            }
+
         },
         addImagePath(results) {
+
+            if(!results) {
+                return results;
+            }
 
             const imagePathBuilder = (result, resultWithPath) => {
                 if(resultWithPath.backdrop_path) {
@@ -46,7 +57,8 @@ const movieService = function() {
                 }
             }
             
-            if(this.ready && results) {
+            if(this.ready) {
+
                 if(Array.isArray(results)) {
                     results = results.map(result => {
                         let resultWithPath = {
@@ -68,41 +80,48 @@ const movieService = function() {
 
                     results = resultWithPath;
                 }
+
             }
 
             return results;
         },
         getConfiguration: async function() {
             const request = `https://api.themoviedb.org/3/configuration?${this.key}`
-            try {
-                this.configuration = await this.requestWrapper(request, true);
-                this.ready = true;
-                return this.configuration;
-            } catch (error) {
-                throw new Error(error);
-            }
+
+            this.configuration = await this.requestWrapper(request, true);
+            this.ready = true;
+            return this.configuration;
         },
         getMovieNowPlaying: async function(page) {
-            const request = `https://api.themoviedb.org/3/movie/now_playing?${this.key}&page=${page ? page : 1}`
-            try {
-                let response = await this.requestWrapper(request);
-                response.results = this.addImagePath(response.results);
-                return response;
-            } catch(error) {
-                throw new Error(error);
+            if(page && typeof page !== 'number') {
+                throw new Error('page must be a number')
             }
+
+            if(!page || page <= 0) {
+                page = 1;
+            }
+
+            const request = `https://api.themoviedb.org/3/movie/now_playing?${this.key}&page=${page}`
+
+            let response = await this.requestWrapper(request);
+            response.results = this.addImagePath(response.results);
+            return response;
         },
         getMovieDetails: async function(id) {
-            const request = `https://api.themoviedb.org/3/movie/${id}?${this.key}&append_to_response=videos,credits`
-            try {
-                let response = await this.requestWrapper(request);
-                response = this.addImagePath(response);
-                return response;
-            } catch(error) {
-                throw new Error(error);
+            if(typeof id !== 'number') {
+                throw new Error('id must be a number')
             }
+
+            const request = `https://api.themoviedb.org/3/movie/${id}?${this.key}&append_to_response=videos,credits`
+            
+            let response = await this.requestWrapper(request);
+            response = this.addImagePath(response);
+            return response;
         },
-        latestResponse: {},
+        reset: function() {
+            this.configuration = {};
+            this.ready = false;
+        },
         configuration: {},
         key: `api_key=${env.MOVIE_DB_API_KEY}`,
         ready: false
