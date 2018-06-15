@@ -150,60 +150,70 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="container">
+    return <div className="container">
         <header>
           <h1 className="App-title">Movies in theater</h1>
         </header>
         <div>
           {this.state.apiReady ? 
             this.state.apiError ?
-              <div className="card horizontal">
-                <div className="card-content">
-                <p>
-                  <b>API Error.</b>
-                </p>
-                <br />
-                <p>
-                  Error dump:
-                  <br />
-                  {JSON.stringify(this.state.movieService.latestResponse)}
-                </p>
-                <br />
-                <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
-                </div>
-              </div>
+              this.renderAPIError()
               :
-              <React.Fragment>
-                <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
-                <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
-                  <MovieList movieList={this.state.movieList.results} />
-                </MovieDetailsContext.Provider>
-                <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
-              </React.Fragment> 
+              this.renderMovieList()
             :
             this.state.apiError ?
-              <div className="card horizontal">
-                <div className="card-content">
-                <p>
-                  <b>Couldn't reach the API to get the configuration.</b>
-                </p>
-                <br />
-                <p>
-                  Error dump:
-                  <br />
-                  {JSON.stringify(this.state.movieService.latestResponse)}
-                </p>
-                <br />
-                <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
-                </div>
-              </div>
+              this.renderAPIConfigurationError()
               :
               <ProgressBar />
             }
         </div>
+      </div>;
+  }
+
+  renderAPIError() {
+    return <div className="card horizontal">
+        <div className="card-content">
+        <p>
+          <b>API Error.</b>
+        </p>
+        <br />
+        <p>
+          Error dump:
+          <br />
+          {JSON.stringify(this.state.movieService.latestResponse)}
+        </p>
+        <br />
+        <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+        </div>
       </div>
-    );
+  }
+
+  renderAPIConfigurationError() {
+    return <div className="card horizontal">
+        <div className="card-content">
+        <p>
+          <b>Couldn't reach the API to get the configuration.</b>
+        </p>
+        <br />
+        <p>
+          Error dump:
+          <br />
+          {JSON.stringify(this.state.movieService.latestResponse)}
+        </p>
+        <br />
+        <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+        </div>
+      </div>
+  }
+
+  renderMovieList() {
+    return <React.Fragment>
+        <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+        <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
+          <MovieList movieList={this.state.movieList.results} />
+        </MovieDetailsContext.Provider>
+        <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+      </React.Fragment> 
   }
 }
 

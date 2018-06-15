@@ -8,22 +8,22 @@ import MovieMoreInfo from './movieMoreInfo';
 
 const MovieMoreInfoModal = (props) =>
     props.movieId ?
-    <MovieDetailsContext.Consumer>
-        {({movieDetails, getMovieDetails, deleteMovieDetails}) => 
-            <Modal
-                header=''
-                fixedFooter
-                trigger={<Button waves='light' className="App-more-button">More Info</Button>}
-                modalOptions={{
-                    ready: () => { getMovieDetails(props.movieId) },
-                    complete: () => { deleteMovieDetails() }
-                }}>
-                <MovieMoreInfo movieDetails={movieDetails} />
-            </Modal>
-        }
-    </MovieDetailsContext.Consumer>
+        <MovieDetailsContext.Consumer>
+            {({movieDetails, getMovieDetails, deleteMovieDetails}) => 
+                <Modal
+                    header=''
+                    fixedFooter
+                    trigger={<Button waves='light' className="App-more-button">More Info</Button>}
+                    modalOptions={{
+                        ready: () => { getMovieDetails(props.movieId) },
+                        complete: () => { deleteMovieDetails() }
+                    }}>
+                    <MovieMoreInfo movieDetails={movieDetails} />
+                </Modal>
+            }
+        </MovieDetailsContext.Consumer>
     :
-    '';
+        '';
 
 MovieMoreInfoModal.propTypes = {
     movieId: PropTypes.number.isRequired
