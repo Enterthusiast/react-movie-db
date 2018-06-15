@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Pagination extends Component {
-  render() {
-    return <div>
-            <ul className="App-pagination pagination center-align">
-                <li className="waves-effect"><a onClick={(e) => this.props.change(1)}>first</a></li>
-                <li className={this.props.previous !== null ? "waves-effect" : "disabled"}><a onClick={this.props.previous !== null ? (e) => this.props.change(this.props.previous) : null}><i className="material-icons">chevron_left</i></a></li>
+const Pagination = (props) =>
+    <div>
+        <ul className="App-pagination pagination center-align">
+            <li className="waves-effect"><a onClick={(e) => props.change(1)}>first</a></li>
+            <li className={props.previous !== null ? "waves-effect" : "disabled"}><a onClick={props.previous !== null ? (e) => props.change(props.previous) : null}><i className="material-icons">chevron_left</i></a></li>
 
-                {this.props.list ? this.props.list.map(page => <li key={page} className={this.props.current === page ? "active" : "waves-effect"}><a onClick={(e) => this.props.change(page)}>{page}</a></li>) : ''}
+            {props.list ? props.list.map(page => <li key={page} className={props.current === page ? "active" : "waves-effect"}><a onClick={(e) => props.change(page)}>{page}</a></li>) : ''}
 
-                <li className={this.props.next !== null ? "waves-effect" : "disabled"}><a onClick={this.props.next !== null ? (e) => this.props.change(this.props.next) : null}><i className="material-icons">chevron_right</i></a></li>
-                <li className="waves-effect"><a onClick={(e) => this.props.change(this.props.total)}>last</a></li>
-            </ul>
-        </div>
-  }
-}
+            <li className={props.next !== null ? "waves-effect" : "disabled"}><a onClick={props.next !== null ? (e) => props.change(props.next) : null}><i className="material-icons">chevron_right</i></a></li>
+            <li className="waves-effect"><a onClick={(e) => props.change(props.total)}>last</a></li>
+        </ul>
+    </div>;
+
+export default Pagination;
 
 Pagination.propTypes = {
     change: PropTypes.func.isRequired,
