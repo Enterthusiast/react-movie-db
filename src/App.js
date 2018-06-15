@@ -153,7 +153,7 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Movies in theater</h1>
+          <h1 className="App-title">Movies in theater</h1>
         </header>
         <div>
           {this.state.apiReady ? 

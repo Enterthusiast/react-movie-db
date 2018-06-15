@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class Pagination extends Component {
   render() {
     return <div>
-            <ul className="pagination center-align">
+            <ul className="App-pagination pagination center-align">
                 <li className="waves-effect"><a onClick={(e) => this.props.change(1)}>first</a></li>
                 <li className={this.props.previous !== null ? "waves-effect" : "disabled"}><a onClick={this.props.previous !== null ? (e) => this.props.change(this.props.previous) : null}><i className="material-icons">chevron_left</i></a></li>
 

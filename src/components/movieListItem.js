@@ -22,11 +22,11 @@ const MovieListItem = (props) =>
                         <span className="App-secondary-text-color">{props.movieListItem.release_date}</span>
                     </div>
                 </div>
-                <p className="App-content-text-color">
-                    {props.movieListItem.overview.length > 196 ? props.movieListItem.overview.substr(0, 196)+'...' : props.movieListItem.overview}
+                <p className="App-content-text-color App-card-overview">
+                    {props.movieListItem.overview.length > 184 ? props.movieListItem.overview.substr(0, 184)+'...' : props.movieListItem.overview}
                 </p>
             </div>
-            <div className="card-action">
+            <div className="card-action App-card-action">
                 <MovieMoreInfoModal movieId={props.movieListItem.id}/>
             </div>
         </div>
