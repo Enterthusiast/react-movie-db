@@ -5,7 +5,7 @@ import {ProgressBar, Button} from 'react-materialize';
 
 import movieService from './services/movieService';
 import Pagination from './components/pagination';
-import MovieList from './components/movieList';
+import MovieList from './components/movie/movieList';
 import MovieDetailsContext from './contexts/movieDetailsContext';
 
 class App extends Component {
@@ -35,11 +35,14 @@ class App extends Component {
     this.deleteMovieDetails = this.deleteMovieDetails.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     // init
-    this.getMovieServiceConfiguration().then(() => {
-      this.getMovieNowPlaying();
-    });
+    try {
+      await this.getMovieServiceConfiguration();
+      await this.getMovieNowPlaying();
+    } catch (error) {
+      console.error(new Error(error));
+    }
   }
 
   async getMovieServiceConfiguration() {
@@ -53,13 +56,13 @@ class App extends Component {
         } 
       })
     } catch(error) {
-      console.error(new Error(error));
       this.setState((prevState, props) => {
         return { 
           ...prevState,
           apiError: true
         } 
       })
+      throw new Error(error);
     }
   }
 

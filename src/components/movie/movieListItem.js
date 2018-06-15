@@ -23,11 +23,11 @@ const MovieListItem = (props) =>
                     </div>
                 </div>
                 <p className="App-content-text-color App-card-overview">
-                    {props.movieListItem.overview.length > 184 ? props.movieListItem.overview.substr(0, 184)+'...' : props.movieListItem.overview}
+                    {(props.movieListItem.overview && props.movieListItem.overview.length > 184) ? props.movieListItem.overview.substr(0, 184)+'...' : props.movieListItem.overview}
                 </p>
             </div>
             <div className="card-action App-card-action">
-                <MovieMoreInfoModal movieId={props.movieListItem.id}/>
+                {props.movieListItem.id ? <MovieMoreInfoModal movieId={props.movieListItem.id}/> : ''}
             </div>
         </div>
     </div>;

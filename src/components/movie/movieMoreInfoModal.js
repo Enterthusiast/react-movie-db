@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Button, Modal} from 'react-materialize';
 
-import MovieDetailsContext from '../contexts/movieDetailsContext';
+import MovieDetailsContext from '../../contexts/movieDetailsContext';
 import MovieMoreInfo from './movieMoreInfo';
 
 const MovieMoreInfoModal = (props) =>
