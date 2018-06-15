@@ -173,17 +173,17 @@ class App extends Component {
   renderAPIError() {
     return <div className="card horizontal">
         <div className="card-content">
-        <p>
-          <b>API Error.</b>
-        </p>
-        <br />
-        <p>
-          Error dump:
+          <p>
+            <b>API Error.</b>
+          </p>
           <br />
-          {JSON.stringify(this.state.movieService.latestResponse)}
-        </p>
-        <br />
-        <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+          <p>
+            Error dump:
+            <br />
+            {JSON.stringify(this.state.movieService.latestResponse)}
+          </p>
+          <br />
+          <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
         </div>
       </div>
   }
@@ -191,17 +191,17 @@ class App extends Component {
   renderAPIConfigurationError() {
     return <div className="card horizontal">
         <div className="card-content">
-        <p>
-          <b>Couldn't reach the API to get the configuration.</b>
-        </p>
-        <br />
-        <p>
-          Error dump:
+          <p>
+            <b>Couldn't reach the API to get the configuration.</b>
+          </p>
           <br />
-          {JSON.stringify(this.state.movieService.latestResponse)}
-        </p>
-        <br />
-        <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+          <p>
+            Error dump:
+            <br />
+            {JSON.stringify(this.state.movieService.latestResponse)}
+          </p>
+          <br />
+          <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
         </div>
       </div>
   }
