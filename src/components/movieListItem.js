@@ -14,7 +14,7 @@ const MovieListItem = (props) =>
                 <div className="App-card-secondary-content">
                     <div className="valign-wrapper">
                         <i className="material-icons">poll</i>
-                        <span>{props.movieListItem.vote_average*10}%</span>&nbsp;
+                        <span>{props.movieListItem.vote_average ? `${props.movieListItem.vote_average*10}%` : 'None'}</span>&nbsp;
                         <small className="App-secondary-text-color">{props.movieListItem.vote_count} vote(s)</small>
                     </div>
                     <div className="valign-wrapper">
