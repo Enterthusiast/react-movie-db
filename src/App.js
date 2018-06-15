@@ -69,11 +69,11 @@ class App extends Component {
     
     let pageList = [];
     if(dataList.page - 2 < 1) {
-      for(let i = 1; i < Math.min(5, dataList.total_pages); i++) {
+      for(let i = 1; i <= Math.min(5, dataList.total_pages); i++) {
         pageList.push(i);
       }
     } else if (dataList.page + 2 >= dataList.total_pages) {
-      for(let i = Math.max(1, dataList.total_pages - 2); i <= dataList.total_pages; i++) {
+      for(let i = Math.max(1, dataList.total_pages - 4); i <= dataList.total_pages; i++) {
         pageList.push(i);
       }
     } else {
