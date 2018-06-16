@@ -23,8 +23,6 @@ const movieService = function() {
                 }
 
                 json = await response.json();
-
-                console.log('json', json)
                 
                 return json;
 
@@ -36,6 +34,10 @@ const movieService = function() {
         addImagePath(results) {
 
             if(!results) {
+                return results;
+            }
+
+            if(!this.ready) {
                 return results;
             }
 
@@ -56,31 +58,27 @@ const movieService = function() {
                     resultWithPath.still_path = `${this.configuration.images.secure_base_url}${this.configuration.images.still_sizes[2]}${result.still_path}`;
                 }
             }
-            
-            if(this.ready) {
 
-                if(Array.isArray(results)) {
-                    results = results.map(result => {
-                        let resultWithPath = {
-                            ...result
-                        }
-    
-                        imagePathBuilder(result, resultWithPath);
-        
-                        return {
-                            ...resultWithPath,
-                        }
-                    })
-                } else {
+            if(Array.isArray(results)) {
+                results = results.map(result => {
                     let resultWithPath = {
-                        ...results
+                        ...result
                     }
 
-                    imagePathBuilder(results, resultWithPath);
-
-                    results = resultWithPath;
+                    imagePathBuilder(result, resultWithPath);
+    
+                    return {
+                        ...resultWithPath,
+                    }
+                })
+            } else {
+                let resultWithPath = {
+                    ...results
                 }
 
+                imagePathBuilder(results, resultWithPath);
+
+                results = resultWithPath;
             }
 
             return results;
