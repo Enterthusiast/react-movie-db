@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       movieService,
       movieList: {
-        results: []
+        result: []
       },
       movieListPagination: {
 				previous: 0,
@@ -25,7 +25,9 @@ class App extends Component {
 			},
       movieDetails: {},
       apiReady: false,
-      apiError: false
+      apiLoading: false,
+      apiError: false,
+      apiErrorPayload: {}
     }
 
     // bindings
@@ -46,12 +48,20 @@ class App extends Component {
   }
 
   async getMovieServiceConfiguration() {
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        apiLoading: true
+      } 
+    });
+
     try {
       await movieService.getConfiguration();
       this.setState((prevState, props) => {
         return { 
           ...prevState,
           apiReady: movieService.ready,
+          apiLoading: false,
           apiError: false
         } 
       })
@@ -59,7 +69,9 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          apiError: true
+          apiLoading: false,
+          apiError: true,
+          apiErrorPayload: error
         } 
       })
       throw new Error(error);
@@ -92,6 +104,13 @@ class App extends Component {
   }
 
   async getMovieNowPlaying(page) {
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        apiLoading: true
+      } 
+    });
+
     try {
       const movieList = await movieService.getMovieNowPlaying(page);
 
@@ -108,6 +127,7 @@ class App extends Component {
             current: movieList.page,
             total: movieList.total_pages
           },
+          apiLoading: false,
           apiError: false
         } 
       })
@@ -116,19 +136,29 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          apiError: true
+          apiLoading: false,
+          apiError: true,
+          apiErrorPayload: error
         } 
       })
     }
   }
 
   async getMovieDetails(id) {
+    this.setState((prevState, props) => {
+      return { 
+        ...prevState,
+        apiLoading: true
+      } 
+    });
+
     try {
       const movieDetails = await movieService.getMovieDetails(id);
       this.setState((prevState, props) => {
         return { 
           ...prevState,
           movieDetails,
+          apiLoading: false,
           apiError: false
         } 
       })
@@ -137,7 +167,9 @@ class App extends Component {
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          apiError: true
+          apiLoading: false,
+          apiError: true,
+          apiErrorPayload: error
         } 
       })
     }
@@ -158,17 +190,22 @@ class App extends Component {
           <h1 className="App-title">Movies in theater</h1>
         </header>
         <div>
-          {this.state.apiReady ? 
-            this.state.apiError ?
-              this.renderAPIError()
-              :
-              this.renderMovieList()
+          {this.state.apiLoading ? 
+            <ProgressBar />
             :
-            this.state.apiError ?
-              this.renderAPIConfigurationError()
+            this.state.apiReady ?
+              // Error post API configuration
+              this.state.apiError ?
+                this.renderAPIError()
+                :
+                this.renderMovieList()
               :
-              <ProgressBar />
-            }
+              // Error pre API configuration
+              this.state.apiError ?
+                this.renderAPIConfigurationError()
+                :
+                <ProgressBar />
+          }
         </div>
       </div>;
   }
@@ -183,7 +220,7 @@ class App extends Component {
           <p>
             Error dump:
             <br />
-            {JSON.stringify(this.state.movieService.latestResponse)}
+            {JSON.stringify(this.state.apiErrorPayload)}
           </p>
           <br />
           <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
@@ -201,7 +238,7 @@ class App extends Component {
           <p>
             Error dump:
             <br />
-            {JSON.stringify(this.state.movieService.latestResponse)}
+            {JSON.stringify(this.state.apiErrorPayload)}
           </p>
           <br />
           <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>

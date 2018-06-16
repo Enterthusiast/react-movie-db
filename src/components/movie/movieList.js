@@ -22,7 +22,7 @@ const renderNoResult = () =>
     </div>;
 
 MovieList.propTypes = {
-    movieList: PropTypes.array.isRequired
+    movieList: PropTypes.array
 }
 
 export default MovieList;

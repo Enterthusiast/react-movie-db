@@ -15,21 +15,17 @@ const movieService = function() {
             let response = {};
             let json = {};
 
-            try {
-                response = await fetch(request);
+            response = await fetch(request);
 
-                if(response.status >= 400 || response.status === 0) {
-                    throw new Error(json);
-                }
-
+            if(response) {
                 json = await response.json();
-                
-                return json;
-
-            } catch(error) {
-                throw new Error(error);
             }
 
+            if(response.status >= 400 || response.status === 0) {
+                throw json;
+            }
+            
+            return json;
         },
         addImagePath(results) {
 
