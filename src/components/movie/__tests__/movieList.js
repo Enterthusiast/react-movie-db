@@ -6,27 +6,6 @@ import {ProgressBar} from 'react-materialize';
 
 import MovieList from '../movieList';
 
-// BO Mock context(https://github.com/airbnb/enzyme/issues/1509 & https://medium.com/@ryandrewjohnson/unit-testing-components-using-reacts-new-context-api-4a5219f4b3fe)
-beforeEach(() => {
-  jest.resetModules();
-});
-
-const getComponentWithContext = context => {
-  // mock out the context you're using in the component
-  jest.doMock('../../contexts/movieDetailsContext', () => {
-    return {
-      MovieDetailsContext: {
-        Consumer: (props) => props.children(context)
-      }
-    }
-  });
-  
-  // you need to re-require after calling jest.doMock.
-  // return the updated Component module that now includes the mocked context
-  return require('./MovieList');
-};
-// EO Mock context
-
 describe('render', () => {
   it('shallow renders without crashing', () => {
     shallow(<MovieList movieList={[]} />);
