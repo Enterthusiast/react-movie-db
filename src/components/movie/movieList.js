@@ -16,7 +16,7 @@ const MovieList = (props) =>
 const renderNoResult = () =>
     <div className="card horizontal">
         <div className="card-content">
-            <p>
+            <p className="App-movieList-no-result">
                 <b>No result.</b>
             </p>
             <br />
