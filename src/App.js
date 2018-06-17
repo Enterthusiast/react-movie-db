@@ -17,9 +17,9 @@ class App extends Component {
         results: []
       },
       movieListPagination: {
-				previous: 0,
-				list: [0],
-				next: 0,
+				previous: null,
+				list: [],
+				next: null,
 				current: 1,
 				total: 1
 			},

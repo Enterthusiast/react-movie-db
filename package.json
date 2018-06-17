@@ -4,13 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-materialize": "^2.2.1",
-    "react-scripts": "1.1.4",
-    "react-test-renderer": "^16.4.1"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,7 +18,11 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "gh-pages": "^1.2.0",
-    "jest-fetch-mock": "^1.6.4"
+    "jest-enzyme": "^6.0.1",
+    "jest-fetch-mock": "^1.6.4",
+    "react-test-renderer": "^16.4.1"
   }
 }
