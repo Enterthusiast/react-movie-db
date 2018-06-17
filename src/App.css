@@ -1,4 +1,9 @@
 /* General */
+.App-ProgressBar-placeholder {
+  height: 4px;
+  margin: 7.5px 0 15px 0;
+}
+
 .App-poster-image {
   width: 185px;
   height: 278px;

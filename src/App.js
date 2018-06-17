@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       movieService,
       movieList: {
-        result: []
+        results: []
       },
       movieListPagination: {
 				previous: 0,
@@ -186,14 +186,15 @@ class App extends Component {
 
   render() {
     return <div className="container">
+        {this.state.apiLoading ? 
+          <ProgressBar />
+          :
+          <div className="App-ProgressBar-placeholder"></div>}
         <header>
           <h1 className="App-title">Movies in theater</h1>
         </header>
         <div>
-          {this.state.apiLoading ? 
-            <ProgressBar />
-            :
-            this.state.apiReady ?
+          {this.state.apiReady ?
               // Error post API configuration
               this.state.apiError ?
                 this.renderAPIError()
@@ -204,8 +205,8 @@ class App extends Component {
               this.state.apiError ?
                 this.renderAPIConfigurationError()
                 :
-                <ProgressBar />
-          }
+                ''
+            }
         </div>
       </div>;
   }
@@ -250,11 +251,12 @@ class App extends Component {
     return <React.Fragment>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
         <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
-          <MovieList movieList={this.state.movieList.results} />
+          <MovieList movieList={this.state.movieList.results} apiLoading={this.state.apiLoading} />
         </MovieDetailsContext.Provider>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
       </React.Fragment> 
   }
+
 }
 
 export default App;
