@@ -205,7 +205,7 @@ class App extends Component {
               this.state.apiError ?
                 this.renderAPIConfigurationError()
                 :
-                ''
+                null
             }
         </div>
       </div>;

@@ -16,7 +16,7 @@ describe('render', () => {
     ReactDOM.render(<MovieList movieList={[]} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
-})
+});
 
 describe('movie list', () => {
   it('to show a list of movieListItem if the list is populated', () => {
@@ -25,18 +25,18 @@ describe('movie list', () => {
     const selector = 'MovieListItem';
     expect(wrapper.find(selector).length).toBe(3);
   });
-})
+});
 
 describe('api loading and movie list empty', () => {
   it('to show a progress bar if loading', () => {
-    const wrapper = mount(<MovieList movieList={[]} apiLoading={true} />);
+    const wrapper = shallow(<MovieList movieList={[]} apiLoading={true} />);
     expect(wrapper).toContainReact(<ProgressBar />);
   });
 
   it('to show no result message if not loading', () => {
-    const wrapper = mount(<MovieList movieList={[]} apiLoading={false} />);
+    const wrapper = shallow(<MovieList movieList={[]} apiLoading={false} />);
     const selector = '.App-movieList-no-result';
     expect(wrapper.find(selector)).toContainReact(<b>No result.</b>);
   });
-})
+});
 

@@ -11,9 +11,9 @@ const MovieMoreInfoModal = (props) =>
         <MovieDetailsContext.Consumer>
             {({movieDetails, getMovieDetails, deleteMovieDetails}) => 
                 <Modal
-                    header=''
+                    header=""
                     fixedFooter
-                    trigger={<Button waves='light' className="App-more-button">More Info</Button>}
+                    trigger={<Button waves="light" className="App-more-button">More Info</Button>}
                     modalOptions={{
                         ready: () => { getMovieDetails(props.movieId) },
                         complete: () => { deleteMovieDetails() }
@@ -23,7 +23,7 @@ const MovieMoreInfoModal = (props) =>
             }
         </MovieDetailsContext.Consumer>
     :
-        '';
+        null;
 
 MovieMoreInfoModal.propTypes = {
     movieId: PropTypes.number.isRequired

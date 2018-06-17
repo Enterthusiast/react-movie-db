@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import MovieMoreInfoModal from './movieMoreInfoModal';
@@ -6,7 +7,7 @@ import MovieMoreInfoModal from './movieMoreInfoModal';
 const MovieListItem = (props) => 
     <div className="card horizontal">
         <div className="card-image App-poster-image">
-            <img src={props.movieListItem.poster_path ? props.movieListItem.poster_path : ""} alt={`${props.movieListItem.title} Poster`} onError={(e)=> e.target.parentNode.removeChild(e.target)}/>
+            <img src={props.movieListItem.poster_path ? props.movieListItem.poster_path : ""} alt={`${props.movieListItem.title} Poster`} onError={(e)=> ReactDOM.findDOMNode(e.target).remove() }/>
         </div>
         <div className="card-stacked">
             <div className="card-content">
@@ -14,7 +15,7 @@ const MovieListItem = (props) =>
                 <div className="App-card-secondary-content">
                     <div className="valign-wrapper">
                         <i className="material-icons">poll</i>
-                        <span>{(props.movieListItem.vote_average && props.movieListItem.vote_count) ? `${props.movieListItem.vote_average*10}%` : '#'}</span>&nbsp;
+                        <span className="App-movieListItem-vote">{(props.movieListItem.vote_average && props.movieListItem.vote_count) ? `${props.movieListItem.vote_average*10}%` : '#'}</span>&nbsp;
                         <small className="App-secondary-text-color">{props.movieListItem.vote_count} vote(s)</small>
                     </div>
                     <div className="valign-wrapper">
@@ -27,7 +28,7 @@ const MovieListItem = (props) =>
                 </p>
             </div>
             <div className="card-action App-card-action">
-                {props.movieListItem.id ? <MovieMoreInfoModal movieId={props.movieListItem.id}/> : ''}
+                {<MovieMoreInfoModal movieId={props.movieListItem.id}/>}
             </div>
         </div>
     </div>;
