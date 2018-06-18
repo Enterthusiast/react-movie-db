@@ -190,6 +190,7 @@ class App extends Component {
           <ProgressBar />
           :
           <div className="App-ProgressBar-placeholder"></div>}
+        
         <header>
           <h1 className="App-title">Movies in theater</h1>
         </header>
