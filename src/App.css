@@ -4,6 +4,12 @@
   margin: .5rem 0 1rem 0;
 }
 
+.App-title {
+  cursor: pointer;
+  color: #fff;
+  background-color: #26a69a;
+}
+
 .App-poster-image {
   width: 185px;
   height: 278px;

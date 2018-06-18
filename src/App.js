@@ -192,7 +192,9 @@ class App extends Component {
           <div className="App-ProgressBar-placeholder"></div>}
         
         <header>
-          <h1 className="App-title">Movies in theater</h1>
+          <h1 className="App-title" onClick={(e) => window.location.reload()}>
+            Movies in theater
+          </h1>
         </header>
         <div>
           {this.state.apiReady ?
