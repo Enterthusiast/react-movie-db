@@ -64,10 +64,16 @@ npm run deploy
 - Split the code into more components (Movie Info, Overview, Cast, etc)
 - Add a Router and make it easier to share a page or a movie details url
 - Cache API configuration in local storage
+- Less display logic in components
 - Test with React Context
 - More mocking to remove dependencies between tests
-- More tests !
+- More tests, improve coverage
 
+## Code design choices
+
+App.js supervises and centralizes the state and data logic of the whole app.  
+movieService.js allows hte application to communicate with The Movie DB.  
+Finally the components display the information and use small bits of display logic; mostly for error recovery or filtering.
 
 ## Troubleshot
 
