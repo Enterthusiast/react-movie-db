@@ -87,6 +87,34 @@ describe('paginationDataBuilder', () => {
     };
     expect(paginationData).toEqual(paginationDataExpected);
   });
+  it('do not break on first page plus one', async () => {
+    const dataList = {
+      page: 2,
+      total_pages: 10,
+    }
+    const wrapper = shallow(<App />);
+    const paginationData = await wrapper.instance().paginationDataBuilder(dataList);
+    const paginationDataExpected = {
+      pagePrevious: 1,
+      pageNext: 3,
+      pageList: [1,2,3,4,5]
+    };
+    expect(paginationData).toEqual(paginationDataExpected);
+  });
+  it('do not break on last page minus one', async () => {
+    const dataList = {
+      page: 9,
+      total_pages: 10,
+    }
+    const wrapper = shallow(<App />);
+    const paginationData = await wrapper.instance().paginationDataBuilder(dataList);
+    const paginationDataExpected = {
+      pagePrevious: 8,
+      pageNext: 10,
+      pageList: [6,7,8,9,10]
+    };
+    expect(paginationData).toEqual(paginationDataExpected);
+  });
 });
 
 describe('getMovieNowPlaying', () => {

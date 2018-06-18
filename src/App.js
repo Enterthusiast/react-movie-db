@@ -80,7 +80,7 @@ class App extends Component {
 
   paginationDataBuilder(dataList) {
     const pagePrevious = (dataList.page - 1) > 0 ? dataList.page - 1 : null;
-    const pageNext = (dataList.page + 1) < dataList.total_pages ? dataList.page + 1 : null;
+    const pageNext = (dataList.page + 1) <= dataList.total_pages ? dataList.page + 1 : null;
     
     let pageList = [];
     if(dataList.page - 2 < 1) {
