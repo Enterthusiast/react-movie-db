@@ -29,11 +29,50 @@ describe('title', () => {
   });
 });
 
-describe('release_date', () => {
+describe('release_date year', () => {
   it('show release date year if truthy', () => {
     const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', release_date: '1984-10-31' }} />);
     const selector = '.App-modal-movie-date';
     expect(wrapper.find(selector)).toHaveText('(1984)');
+  });
+});
+
+describe('vote', () => {
+  it('show a # percentage if vote_average and vote_count are falsy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', vote_average: 0, vote_count: 0 }} />);
+    const selector = '.App-movieDetails-vote';
+    expect(wrapper.find(selector)).toHaveText('#');
+  });
+  it('show a percentage if vote_average and vote_count are truthy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', vote_average: 6.6, vote_count: 6 }} />);
+    const selector = '.App-movieDetails-vote';
+    expect(wrapper.find(selector)).toHaveText('66%');
+  });
+});
+
+describe('release_date full', () => {
+  it('show release date if truthy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', release_date: '1984-10-31' }} />);
+    const selector = '.App-movieDetails-release';
+    expect(wrapper.find(selector)).toHaveText('1984-10-31');
+  });
+  it('show None if falsy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const selector = '.App-movieDetails-release';
+    expect(wrapper.find(selector)).toHaveText('None');
+  });
+});
+
+describe('runtime', () => {
+  it('show runtime if truthy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', runtime: '60' }} />);
+    const selector = '.App-movieDetails-runtime';
+    expect(wrapper.find(selector)).toHaveText('60 minutes');
+  });
+  it('show Unknown if falsy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const selector = '.App-movieDetails-runtime';
+    expect(wrapper.find(selector)).toHaveText('Unknown');
   });
 });
 
@@ -147,6 +186,32 @@ describe('genres', () => {
     const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', genres }} />);
     const selector = '.App-modal-genres';
     expect(wrapper.find(selector)).toHaveText('None');
+  });
+});
+
+describe('homepage', () => {
+  it('show Official Website link if truthy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', homepage: 'google.com' }} />);
+    const selector = '.App-movieDetails-homepage';
+    expect(wrapper.find(selector)).toHaveText('Official Website');
+  });
+  it('show No official link if falsy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const selector = '.App-movieDetails-homepage';
+    expect(wrapper.find(selector)).toHaveText('No official link');
+  });
+});
+
+describe('imdb', () => {
+  it('show Imdb link if truthy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', imdb_id: '1' }} />);
+    const selector = '.App-movieDetails-imdb';
+    expect(wrapper.find(selector)).toHaveText('Imdb');
+  });
+  it('show No imdb link if falsy', () => {
+    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const selector = '.App-movieDetails-imdb';
+    expect(wrapper.find(selector)).toHaveText('No imdb link');
   });
 });
 

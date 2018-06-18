@@ -15,12 +15,13 @@ const MovieListItem = (props) =>
                 <div className="App-card-secondary-content">
                     <div className="valign-wrapper">
                         <i className="material-icons">poll</i>
-                        <span className="App-movieListItem-vote">{(props.movieListItem.vote_average && props.movieListItem.vote_count) ? `${props.movieListItem.vote_average*10}%` : '#'}</span>&nbsp;
+                        <span className="App-movieListItem-vote">{(props.movieListItem.vote_average && props.movieListItem.vote_count) ? `${props.movieListItem.vote_average*10}%` : '#'}</span>
+                        &nbsp;
                         <small className="App-secondary-text-color">{props.movieListItem.vote_count} vote(s)</small>
                     </div>
                     <div className="valign-wrapper">
                         <i className="material-icons">date_range</i>
-                        <span className="App-secondary-text-color">{props.movieListItem.release_date}</span>
+                        <span className="App-movieListItem-release App-secondary-text-color">{props.movieListItem.release_date ? props.movieListItem.release_date : 'None'}</span>
                     </div>
                 </div>
                 <p className="App-content-text-color App-card-overview">

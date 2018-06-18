@@ -26,18 +26,19 @@ const MovieMoreInfo = (props) =>
                         <hr />
                         <h5>Info</h5>
                         <div className="App-modal-secondary-content">
-                            <div className="valign-wrapper">
-                                <i className="material-icons">poll</i>
-                                <span>{props.movieDetails.vote_average*10}%</span>&nbsp;
-                                <small className="App-secondary-text-color">{props.movieDetails.vote_count} vote(s)</small>
-                            </div>
+                        <div className="valign-wrapper">
+                            <i className="material-icons">poll</i>
+                            <span className="App-movieDetails-vote">{(props.movieDetails.vote_average && props.movieDetails.vote_count) ? `${props.movieDetails.vote_average*10}%` : '#'}</span>
+                            &nbsp;
+                            <small className="App-secondary-text-color">{props.movieDetails.vote_count} vote(s)</small>
+                        </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">date_range</i>
-                                <span className="App-secondary-text-color">{props.movieDetails.release_date}</span>
+                                <span className="App-movieDetails-release App-secondary-text-color">{props.movieDetails.release_date ? props.movieDetails.release_date : 'None'}</span>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">access_time</i>
-                                <span className="App-secondary-text-color">{props.movieDetails.runtime} minutes</span>
+                                <span className="App-movieDetails-runtime App-secondary-text-color">{props.movieDetails.runtime ? `${props.movieDetails.runtime} minutes` : 'Unknown'}</span>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">play_circle_outline</i>
@@ -68,9 +69,13 @@ const MovieMoreInfo = (props) =>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">open_in_new</i>
-                                <span className="App-secondary-text-color"><a href={props.movieDetails.homepage} target="_blank">Official Website</a></span>
-                                <span>,&nbsp;</span>
-                                <span className="App-secondary-text-color"><a href={`https://www.imdb.com/title/${props.movieDetails.imdb_id}`} target="_blank">Imdb</a></span>
+                                <span className="App-movieDetails-homepage App-secondary-text-color">
+                                    {props.movieDetails.homepage ? <a href={props.movieDetails.homepage} target="_blank">Official Website</a> : 'No official link'}
+                                </span>
+                                ,&nbsp;
+                                <span className="App-movieDetails-imdb App-secondary-text-color">
+                                    {props.movieDetails.imdb_id ? <a href={`https://www.imdb.com/title/${props.movieDetails.imdb_id}`} target="_blank">Imdb</a> : 'No imdb link'}
+                                </span>
                             </div>
                             <div className="valign-wrapper">
                                 <i className="material-icons">monetization_on</i>

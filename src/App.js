@@ -43,7 +43,7 @@ class App extends Component {
       await this.getMovieServiceConfiguration();
       await this.getMovieNowPlaying();
     } catch (error) {
-      console.error(new Error(error));
+      console.error(error);
     }
   }
 
@@ -132,7 +132,7 @@ class App extends Component {
         } 
       })
     } catch(error) {
-      console.error(new Error(error));
+      console.error(error);
       this.setState((prevState, props) => {
         return { 
           ...prevState,
@@ -163,7 +163,7 @@ class App extends Component {
         } 
       })
     } catch(error) {
-      console.error(new Error(error));
+      console.error(error);
       this.setState((prevState, props) => {
         return { 
           ...prevState,

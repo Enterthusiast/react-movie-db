@@ -22,7 +22,7 @@ const MovieMoreInfoModal = (props) =>
                 </Modal>
             }
         </MovieDetailsContext.Consumer>
-    :
+        :
         null;
 
 MovieMoreInfoModal.propTypes = {
