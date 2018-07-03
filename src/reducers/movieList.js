@@ -1,10 +1,10 @@
-import { UPDATE_MOVIELIST } from '../actions/actions'
+import { UPDATE_MOVIE_LIST } from '../actions/actions'
 
 const initialState = []
 
 const movieList = function(state = initialState, action) {
     switch (action.type) {
-        case UPDATE_MOVIELIST:
+        case UPDATE_MOVIE_LIST:
             return [
                 ...action.movieList
             ]

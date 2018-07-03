@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import MovieMoreInfoModal from './movieMoreInfoModal';
+import MovieMoreInfoModal from '../../containers/movie/movieMoreInfoModal';
 
 const MovieListItem = (props) => 
     <div className="card horizontal">

@@ -4,29 +4,30 @@ import PropTypes from 'prop-types';
 import {Button, Modal} from 'react-materialize';
 
 import MovieDetailsContext from '../../contexts/movieDetailsContext';
-import MovieMoreInfo from './movieMoreInfo';
+import MovieMoreInfo from '../../containers/movie/movieMoreInfo';
 
 const MovieMoreInfoModal = (props) =>
     props.movieId ?
         <MovieDetailsContext.Consumer>
-            {({movieDetails, getMovieDetails, deleteMovieDetails}) => 
+            {({ getMovieDetails }) => 
                 <Modal
                     header=""
                     fixedFooter
                     trigger={<Button waves="light" className="App-more-button">More Info</Button>}
                     modalOptions={{
                         ready: () => { getMovieDetails(props.movieId) },
-                        complete: () => { deleteMovieDetails() }
+                        complete: () => { props.clearMovieDetails() }
                     }}>
-                    <MovieMoreInfo movieDetails={movieDetails} />
+                    <MovieMoreInfo />
                 </Modal>
             }
         </MovieDetailsContext.Consumer>
         :
         null;
-
+        
 MovieMoreInfoModal.propTypes = {
-    movieId: PropTypes.number.isRequired
+    movieId: PropTypes.number.isRequired,
+    clearMovieDetails: PropTypes.func.isRequired
 }
 
 export default MovieMoreInfoModal;

@@ -10,7 +10,7 @@ import MovieDetailsContext from './contexts/movieDetailsContext';
 // BO redux
 import MovieList from './containers/movie/movieList';
 import Pagination from './containers/pagination';
-import { updateMovieList, changePage } from './actions/actions'
+import { updateMovieList, changePage, updateMovieDetails } from './actions/actions'
 // EO redux
 
 class App extends Component {
@@ -162,10 +162,14 @@ class App extends Component {
 
     try {
       const movieDetails = await movieService.getMovieDetails(id);
+
+      // BO redux
+      this.context.store.dispatch(updateMovieDetails(movieDetails));
+      // EO redux
+
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          movieDetails,
           apiLoading: false,
           apiError: false
         } 
