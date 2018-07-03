@@ -4,7 +4,7 @@ import './App.css';
 
 import {ProgressBar, Button} from 'react-materialize';
 
-import movieService from './services/movieService';
+import movieServiceInitializer from './services/movieService';
 import MovieDetailsContext from './contexts/movieDetailsContext';
 
 // BO redux
@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieService,
+      movieService: {},
       movieList: {
         results: []
       },
@@ -36,7 +36,6 @@ class App extends Component {
     }
 
     // bindings
-    this.getMovieServiceConfiguration = this.getMovieServiceConfiguration.bind(this);
     this.getMovieNowPlaying = this.getMovieNowPlaying.bind(this);
     this.getMovieDetails = this.getMovieDetails.bind(this);
     this.deleteMovieDetails = this.deleteMovieDetails.bind(this);
@@ -45,41 +44,17 @@ class App extends Component {
   async componentWillMount() {
     // init
     try {
-      await this.getMovieServiceConfiguration();
+      const movieService = await movieServiceInitializer();
+      this.setState((prevState, props) => {
+        return { 
+          ...prevState,
+          movieService
+        } 
+      });
+
       await this.getMovieNowPlaying();
     } catch (error) {
       console.error(error);
-    }
-  }
-
-  async getMovieServiceConfiguration() {
-    this.setState((prevState, props) => {
-      return { 
-        ...prevState,
-        apiLoading: true
-      } 
-    });
-
-    try {
-      await movieService.getConfiguration();
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiReady: movieService.ready,
-          apiLoading: false,
-          apiError: false
-        } 
-      })
-    } catch(error) {
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiLoading: false,
-          apiError: true,
-          apiErrorPayload: error
-        } 
-      })
-      throw new Error(error);
     }
   }
 
@@ -119,7 +94,7 @@ class App extends Component {
     });
 
     try {
-      const movieList = await movieService.getMovieNowPlaying(page);
+      const movieList = await this.state.movieService.getMovieNowPlaying(page);
 
 
       const pagination = this.paginationDataBuilder({ 
@@ -161,7 +136,7 @@ class App extends Component {
     });
 
     try {
-      const movieDetails = await movieService.getMovieDetails(id);
+      const movieDetails = await this.state.movieService.getMovieDetails(id);
 
       // BO redux
       this.context.store.dispatch(updateMovieDetails(movieDetails));
@@ -209,7 +184,7 @@ class App extends Component {
           </h1>
         </header>
         <div>
-          {this.state.apiReady ?
+          {this.state.movieService ?
               // Error post API configuration
               this.state.apiError ?
                 this.renderAPIError()
@@ -239,7 +214,7 @@ class App extends Component {
             {JSON.stringify(this.state.apiErrorPayload)}
           </p>
           <br />
-          <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+          <Button onClick={(e) => window.location.reload()}>Retry</Button>
         </div>
       </div>
   }
@@ -257,7 +232,7 @@ class App extends Component {
             {JSON.stringify(this.state.apiErrorPayload)}
           </p>
           <br />
-          <Button onClick={this.getMovieServiceConfiguration}>Retry</Button>
+          <Button onClick={(e) => window.location.reload()}>Retry</Button>
         </div>
       </div>
   }
@@ -266,7 +241,7 @@ class App extends Component {
     return <React.Fragment>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
         <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
-          <MovieList movieList={this.state.movieList.results} apiLoading={this.state.apiLoading} />
+          <MovieList apiLoading={this.state.apiLoading} />
         </MovieDetailsContext.Provider>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
       </React.Fragment> 

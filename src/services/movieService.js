@@ -1,6 +1,6 @@
 import env from '../environments/config'
 
-const movieService = function() {
+const movieServiceInitializer = function() {
 
     let service = {
         requestWrapper: async function(request, initialize) {
@@ -121,7 +121,14 @@ const movieService = function() {
         ready: false
     }
 
-    return service;
+    // initialize
+    // load api configuration
+    const serviceInitializer = async function() {
+        await service.getConfiguration();
+        return service;
+    }
+          
+    return serviceInitializer;
 }
 
-export default movieService();
+export default movieServiceInitializer();
