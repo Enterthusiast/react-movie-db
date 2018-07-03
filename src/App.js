@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 
 import {ProgressBar, Button} from 'react-materialize';
 
 import movieService from './services/movieService';
-import Pagination from './components/pagination';
-import MovieList from './components/movie/movieList';
 import MovieDetailsContext from './contexts/movieDetailsContext';
+
+// BO redux
+import MovieList from './containers/movie/movieList';
+import Pagination from './containers/pagination';
+import { updateMovieList, changePage } from './actions/actions'
+// EO redux
 
 class App extends Component {
   constructor(props) {
@@ -97,9 +102,11 @@ class App extends Component {
       }
     }
     return {
-      pagePrevious,
-      pageNext,
-      pageList
+      previous: pagePrevious,
+      next: pageNext,
+      list: pageList,
+      current: dataList.page,
+      total: dataList.total_pages,
     }
   }
 
@@ -114,19 +121,20 @@ class App extends Component {
     try {
       const movieList = await movieService.getMovieNowPlaying(page);
 
-      const { pagePrevious, pageNext, pageList } = this.paginationDataBuilder(movieList);
+
+      const pagination = this.paginationDataBuilder({ 
+        page: movieList.page,
+        total_pages: movieList.total_pages 
+      });
+
+      // BO redux
+      this.context.store.dispatch(updateMovieList(movieList.results));
+      this.context.store.dispatch(changePage(pagination));
+      // EO redux
 
       this.setState((prevState, props) => {
         return { 
           ...prevState,
-          movieList,
-          movieListPagination: {
-            previous: pagePrevious,
-            list: pageList,
-            next: pageNext,
-            current: movieList.page,
-            total: movieList.total_pages
-          },
           apiLoading: false,
           apiError: false
         } 
@@ -260,6 +268,10 @@ class App extends Component {
       </React.Fragment> 
   }
 
+}
+
+App.contextTypes = {
+  store: PropTypes.object
 }
 
 export default App;
