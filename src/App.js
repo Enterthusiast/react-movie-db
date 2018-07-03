@@ -5,7 +5,6 @@ import './App.css';
 import {ProgressBar, Button} from 'react-materialize';
 
 import movieServiceInitializer from './services/movieService';
-import MovieDetailsContext from './contexts/movieDetailsContext';
 
 // BO redux
 import MovieList from './containers/movie/movieList';
@@ -240,9 +239,7 @@ class App extends Component {
   renderMovieList() {
     return <React.Fragment>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
-        <MovieDetailsContext.Provider value={{ movieDetails: this.state.movieDetails, getMovieDetails: this.getMovieDetails, deleteMovieDetails: this.deleteMovieDetails }}>
           <MovieList apiLoading={this.state.apiLoading} />
-        </MovieDetailsContext.Provider>
         <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
       </React.Fragment> 
   }
