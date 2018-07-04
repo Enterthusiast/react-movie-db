@@ -1,9 +1,9 @@
-import { connect } from 'react-redux'
-import Pagination from '../components/pagination'
+import { connect } from 'react-redux';
+import AppWrapper from '../components/appWrapper';
 import updateMovieListLogic from './logic/updateMovieListLogic';
 
 const mapStateToProps = state => ({
-    ...state.movieListPagination
+    apiStatus: state.apiStatus
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Pagination)
+)(AppWrapper)

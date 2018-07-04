@@ -8,7 +8,7 @@ import MovieListItem from "./movieListItem";
 const MovieList = (props) =>
     (props.movieList && props.movieList.length) ? props.movieList.map(movieListItem => <MovieListItem key={movieListItem.id+movieListItem.original_title} movieListItem={movieListItem} />)
     :
-    props.apiLoading ?
+    props.apiStatus.apiLoadingStatus ?
         <ProgressBar />
         :
         renderNoResult();
@@ -25,6 +25,7 @@ const renderNoResult = () =>
     </div>;
 
 MovieList.propTypes = {
+    apiLoading: PropTypes.bool,
     movieList: PropTypes.array
 }
 

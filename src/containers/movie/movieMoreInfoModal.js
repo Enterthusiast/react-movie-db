@@ -1,14 +1,11 @@
 import { connect } from 'react-redux'
 import MovieMoreInfoModal from '../../components/movie/movieMoreInfoModal'
-import { updateMovieDetails, clearMovieDetails } from '../../actions/actions'
-import movieServiceInitializer from '../../services/movieService';
+import { clearMovieDetails } from '../../actions/actions'
+import getMovieDetailsLogic from '../logic/getMovieDetailsLogic'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getMovieDetails: async (movieId) => {
-        const movieService = await movieServiceInitializer();
-        const movieDetails = await movieService.getMovieDetails(movieId);
-
-        dispatch(updateMovieDetails(movieDetails));
+        getMovieDetailsLogic(dispatch, movieId)
     },
     clearMovieDetails: () => {
         dispatch(clearMovieDetails())

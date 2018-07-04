@@ -10,9 +10,8 @@ const MovieMoreInfoModal = (props) =>
         <Modal
             header=""
             fixedFooter
-            trigger={<Button waves="light" className="App-more-button">More Info</Button>}
+            trigger={<div><Button waves="light" onClick={(e) => { props.getMovieDetails(props.movieId) }} className="App-more-button">More Info</Button></div>}
             modalOptions={{
-                ready: () => { props.getMovieDetails(props.movieId) },
                 complete: () => { props.clearMovieDetails() }
             }}>
             <MovieMoreInfo />
