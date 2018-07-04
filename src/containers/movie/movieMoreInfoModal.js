@@ -4,17 +4,11 @@ import { updateMovieDetails, clearMovieDetails } from '../../actions/actions'
 import movieServiceInitializer from '../../services/movieService';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getMovieDetails: (movieId) => {
+    getMovieDetails: async (movieId) => {
+        const movieService = await movieServiceInitializer();
+        const movieDetails = await movieService.getMovieDetails(movieId);
 
-        const getMovieDetailsLogic = async function() {
-            const movieService = await movieServiceInitializer();
-            const movieDetails = await movieService.getMovieDetails(movieId);
-    
-            dispatch(updateMovieDetails(movieDetails));
-        }
-
-        getMovieDetailsLogic();
-
+        dispatch(updateMovieDetails(movieDetails));
     },
     clearMovieDetails: () => {
         dispatch(clearMovieDetails())

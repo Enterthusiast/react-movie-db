@@ -5,11 +5,12 @@ import './App.css';
 import {ProgressBar, Button} from 'react-materialize';
 
 import movieServiceInitializer from './services/movieService';
+import paginationFactory from './utils/paginationFactory';
 
 // BO redux
 import MovieList from './containers/movie/movieList';
 import Pagination from './containers/pagination';
-import { updateMovieList, changePage, updateMovieDetails } from './actions/actions'
+import { updateMovieList, changePage } from './actions/actions'
 // EO redux
 
 class App extends Component {
@@ -33,141 +34,30 @@ class App extends Component {
       apiError: false,
       apiErrorPayload: {}
     }
-
-    // bindings
-    this.getMovieNowPlaying = this.getMovieNowPlaying.bind(this);
-    this.getMovieDetails = this.getMovieDetails.bind(this);
-    this.deleteMovieDetails = this.deleteMovieDetails.bind(this);
   }
 
   async componentWillMount() {
     // init
     try {
       const movieService = await movieServiceInitializer();
+      const movieList = await movieService.getMovieNowPlaying();
+      const movieListPagination = paginationFactory.buildPagination({ 
+          page: movieList.page,
+          total_pages: movieList.total_pages 
+      });
+
+      this.context.store.dispatch(updateMovieList(movieList.results));
+      this.context.store.dispatch(changePage(movieListPagination));
+
       this.setState((prevState, props) => {
         return { 
           ...prevState,
           movieService
         } 
       });
-
-      await this.getMovieNowPlaying();
     } catch (error) {
       console.error(error);
     }
-  }
-
-  paginationDataBuilder(dataList) {
-    const pagePrevious = (dataList.page - 1) > 0 ? dataList.page - 1 : null;
-    const pageNext = (dataList.page + 1) <= dataList.total_pages ? dataList.page + 1 : null;
-    
-    let pageList = [];
-    if(dataList.page - 2 < 1) {
-      for(let i = 1; i <= Math.min(5, dataList.total_pages); i++) {
-        pageList.push(i);
-      }
-    } else if (dataList.page + 2 >= dataList.total_pages) {
-      for(let i = Math.max(1, dataList.total_pages - 4); i <= dataList.total_pages; i++) {
-        pageList.push(i);
-      }
-    } else {
-      for(let i = dataList.page - 2; i <= dataList.page + 2; i++) {
-        pageList.push(i);
-      }
-    }
-    return {
-      previous: pagePrevious,
-      next: pageNext,
-      list: pageList,
-      current: dataList.page,
-      total: dataList.total_pages,
-    }
-  }
-
-  async getMovieNowPlaying(page) {
-    this.setState((prevState, props) => {
-      return { 
-        ...prevState,
-        apiLoading: true
-      } 
-    });
-
-    try {
-      const movieList = await this.state.movieService.getMovieNowPlaying(page);
-
-
-      const pagination = this.paginationDataBuilder({ 
-        page: movieList.page,
-        total_pages: movieList.total_pages 
-      });
-
-      // BO redux
-      this.context.store.dispatch(updateMovieList(movieList.results));
-      this.context.store.dispatch(changePage(pagination));
-      // EO redux
-
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiLoading: false,
-          apiError: false
-        } 
-      })
-    } catch(error) {
-      console.error(error);
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiLoading: false,
-          apiError: true,
-          apiErrorPayload: error
-        } 
-      })
-    }
-  }
-
-  async getMovieDetails(id) {
-    this.setState((prevState, props) => {
-      return { 
-        ...prevState,
-        apiLoading: true
-      } 
-    });
-
-    try {
-      const movieDetails = await this.state.movieService.getMovieDetails(id);
-
-      // BO redux
-      this.context.store.dispatch(updateMovieDetails(movieDetails));
-      // EO redux
-
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiLoading: false,
-          apiError: false
-        } 
-      })
-    } catch(error) {
-      console.error(error);
-      this.setState((prevState, props) => {
-        return { 
-          ...prevState,
-          apiLoading: false,
-          apiError: true,
-          apiErrorPayload: error
-        } 
-      })
-    }
-  }
-
-  deleteMovieDetails() {
-    this.setState((prevState, props) => {
-      return { 
-        ...prevState,
-        movieDetails: {}
-      } 
-    })
   }
 
   render() {
@@ -238,9 +128,9 @@ class App extends Component {
 
   renderMovieList() {
     return <React.Fragment>
-        <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+        <Pagination {...this.state.movieListPagination} />
           <MovieList apiLoading={this.state.apiLoading} />
-        <Pagination {...this.state.movieListPagination} change={this.getMovieNowPlaying}/>
+        <Pagination {...this.state.movieListPagination} />
       </React.Fragment> 
   }
 
