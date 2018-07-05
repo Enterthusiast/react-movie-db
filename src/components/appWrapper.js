@@ -67,7 +67,7 @@ class AppWrapper extends Component {
                 Movies in theater
             </h1>
             </header>
-            <div>
+            <div className="App-content">
             {this.props.apiStatus.apiErrorConfigStatus ?
                 // Error pre API configuration
                 this.props.apiStatus.apiErrorStatus ?
@@ -83,10 +83,6 @@ class AppWrapper extends Component {
             </div>
         </div>;
     }
-}
-
-AppWrapper.contextTypes = {
-  store: PropTypes.object
 }
 
 export default AppWrapper;

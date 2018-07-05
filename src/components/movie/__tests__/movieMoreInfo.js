@@ -5,25 +5,40 @@ import { shallow, mount } from 'enzyme';
 import MovieMoreInfo from '../movieMoreInfo';
 import { ProgressBar } from 'react-materialize';
 
+let props = {};
+beforeEach(() => {
+	props = {
+		apiStatus: {
+			apiLoadingStatus: false
+		},
+		movieDetails: {}
+	};
+})
+
 describe('render', () => {
+
   it('shallow renders without crashing', () => {
-    shallow(<MovieMoreInfo movieDetails={{}} />);
+    shallow(<MovieMoreInfo {...props} />);
   });
   
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<MovieMoreInfo movieDetails={{}} />, div);
+    ReactDOM.render(<MovieMoreInfo {...props} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });
 
 describe('title', () => {
-  it('show a progress bar if title is falsy', () => {
-    const wrapper = mount(<MovieMoreInfo  movieDetails={{}} />);
+
+  it('show a progress bar if apiLoadingStatus is true', () => {
+		props.apiStatus.apiLoadingStatus = true;
+
+    const wrapper = mount(<MovieMoreInfo {...props} />);
     expect(wrapper).toContainReact(<ProgressBar />);
-  });
-  it('show modal content if title is truthy', () => {
-    const wrapper = mount(<MovieMoreInfo  movieDetails={{ title: 'title'}} />);
+	});
+	
+  it('show modal content if apiLoadingStatus is false', () => {
+    const wrapper = mount(<MovieMoreInfo {...props} />);
     const selector = '.App-modal-content';
     expect(wrapper.find(selector)).toExist();
   });
@@ -31,7 +46,9 @@ describe('title', () => {
 
 describe('release_date year', () => {
   it('show release date year if truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', release_date: '1984-10-31' }} />);
+		props.movieDetails = { release_date: '1984-10-31' };
+
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-modal-movie-date';
     expect(wrapper.find(selector)).toHaveText('(1984)');
   });
@@ -39,12 +56,16 @@ describe('release_date year', () => {
 
 describe('vote', () => {
   it('show a # percentage if vote_average and vote_count are falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', vote_average: 0, vote_count: 0 }} />);
+		props.movieDetails = { vote_average: 0, vote_count: 0 };
+
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-vote';
     expect(wrapper.find(selector)).toHaveText('#');
   });
   it('show a percentage if vote_average and vote_count are truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', vote_average: 6.6, vote_count: 6 }} />);
+		props.movieDetails = { vote_average: 6.6, vote_count: 6 };
+
+		const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-vote';
     expect(wrapper.find(selector)).toHaveText('66%');
   });
@@ -52,12 +73,14 @@ describe('vote', () => {
 
 describe('release_date full', () => {
   it('show release date if truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', release_date: '1984-10-31' }} />);
+		props.movieDetails = { release_date: '1984-10-31' };
+
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-release';
     expect(wrapper.find(selector)).toHaveText('1984-10-31');
   });
   it('show None if falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-release';
     expect(wrapper.find(selector)).toHaveText('None');
   });
@@ -65,12 +88,14 @@ describe('release_date full', () => {
 
 describe('runtime', () => {
   it('show runtime if truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', runtime: '60' }} />);
+		props.movieDetails = { runtime: '60' };
+	
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-runtime';
     expect(wrapper.find(selector)).toHaveText('60 minutes');
   });
   it('show Unknown if falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo {...props} />);
     const selector = '.App-movieDetails-runtime';
     expect(wrapper.find(selector)).toHaveText('Unknown');
   });
@@ -151,14 +176,18 @@ describe('videos', () => {
 			"size": 1080,
 			"type": "Trailer"
 		}];
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', videos: {results} }} />);
+		props.movieDetails = { videos: {results} };
+		const wrapper = shallow(<MovieMoreInfo  {...props} />);
+		
     const selector = '.App-modal-videos';
     const html = '<span class="App-modal-videos App-secondary-text-color"><span><a href="https://youtube.com/watch?v=vn9mMeWcgoM" target="_blank">Jurassic World: Fallen Kingdom - Official Trailer [HD]</a></span><span>, <a href="https://youtube.com/watch?v=NooW_RbfdWI" target="_blank">Jurassic World: Fallen Kingdom - Official Trailer #2 [HD]</a></span><span>, <a href="https://youtube.com/watch?v=1FJD7jZqZEk" target="_blank">Jurassic World: Fallen Kingdom - Final Trailer [HD]</a></span></span>';
     expect(wrapper.find(selector)).toHaveHTML(html);
   });
   it('show None if empty results', () => {
-    const results = [];
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', videos: {results} }} />);
+		const results = [];
+		props.movieDetails = { videos: {results} };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-videos';
     expect(wrapper.find(selector)).toHaveText('None');
   });
@@ -175,15 +204,19 @@ describe('genres', () => {
     }, {
       "id": 878,
       "name": "Science Fiction"
-    }];
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', genres }} />);
+		}];
+		props.movieDetails = { genres };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-genres';
     const html = '<span class="App-modal-genres App-secondary-text-color"><span>Action</span><span>, Adventure</span><span>, Science Fiction</span></span>';
     expect(wrapper.find(selector)).toHaveHTML(html);
   });
   it('show None if empty genres', () => {
-    const genres = [];
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', genres }} />);
+		const genres = [];
+		props.movieDetails = { genres };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-genres';
     expect(wrapper.find(selector)).toHaveText('None');
   });
@@ -191,12 +224,14 @@ describe('genres', () => {
 
 describe('homepage', () => {
   it('show Official Website link if truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', homepage: 'google.com' }} />);
+		props.movieDetails = { homepage: 'google.com' };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-movieDetails-homepage';
     expect(wrapper.find(selector)).toHaveText('Official Website');
   });
   it('show No official link if falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-movieDetails-homepage';
     expect(wrapper.find(selector)).toHaveText('No official link');
   });
@@ -204,12 +239,14 @@ describe('homepage', () => {
 
 describe('imdb', () => {
   it('show Imdb link if truthy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title', imdb_id: '1' }} />);
+		props.movieDetails = { imdb_id: '1' };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-movieDetails-imdb';
     expect(wrapper.find(selector)).toHaveText('Imdb');
   });
   it('show No imdb link if falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-movieDetails-imdb';
     expect(wrapper.find(selector)).toHaveText('No imdb link');
   });
@@ -217,13 +254,15 @@ describe('imdb', () => {
 
 describe('revenue', () => {
   it('show revenue if any', () => {
-    const revenue = 3000000000;
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', revenue }} />);
+		const revenue = 3000000000;
+		props.movieDetails = { revenue };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-revenue';
     expect(wrapper.find(selector)).toHaveText('$3,000,000,000');
   });
   it('show Unkown if revenue is falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-revenue';
     expect(wrapper.find(selector)).toHaveText('Unknown');
   });
@@ -231,13 +270,15 @@ describe('revenue', () => {
 
 describe('overview', () => {
   it('show overview if any', () => {
-    const overview = 'I am an overview';
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title', overview }} />);
+		const overview = 'I am an overview';
+		props.movieDetails = { overview };
+
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-overview';
     expect(wrapper.find(selector)).toHaveText('I am an overview');
   });
   it('show nothing if overview is falsy', () => {
-    const wrapper = shallow(<MovieMoreInfo  movieDetails={{ title: 'title' }} />);
+    const wrapper = shallow(<MovieMoreInfo  {...props} />);
     const selector = '.App-modal-overview';
     expect(wrapper.find(selector)).not.toExist();
   });
@@ -399,14 +440,15 @@ describe('cast', () => {
 			"order": 16,
 			"profile_path": "/lYd4BVmgQofkLVzDPzKE7RJzjNC.jpg"
 		}];
-    const wrapper = mount(<MovieMoreInfo  movieDetails={{ title: 'title', credits: {cast} }} />);
+		props.movieDetails = { credits: {cast} };
+    const wrapper = mount(<MovieMoreInfo {...props} />);
     const selector = '.App-modal-cast';
     const html = '<ul class="App-modal-cast"><li><b>Chris Pratt</b> (Owen Grady)</li><li><b>Bryce Dallas Howard</b> (Claire Dearing)</li><li><b>Rafe Spall</b> (Eli Mills)</li><li><b>Justice Smith</b> (Franklin Webb)</li><li><b>Daniella Pineda</b> (Dr. Zia Rodriguez)</li></ul>';
     expect(wrapper.find(selector)).toHaveHTML(html);
   });
   it('show nothing if empty cast', () => {
     const cast = [];
-    const wrapper = mount(<MovieMoreInfo  movieDetails={{ title: 'title', credits: {cast} }} />);
+    const wrapper = mount(<MovieMoreInfo {...props} />);
     const selector = '.App-modal-cast';
     expect(wrapper.find(selector)).not.toExist();
   });

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
 
 import MovieListItem from '../movieListItem';
-jest.mock('../movieMoreInfoModal');
+jest.mock('../../../containers/movie/movieMoreInfoModal');
 
 describe('render', () => {
   it('shallow renders without crashing', () => {

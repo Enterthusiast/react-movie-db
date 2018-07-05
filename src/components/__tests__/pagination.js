@@ -4,13 +4,7 @@ import { shallow } from 'enzyme';
 
 import Pagination from '../pagination';
 
-let movieListPagination = {
-        previous: null,
-        list: [],
-        next: null,
-        current: 1,
-        total: 1
-};
+let movieListPagination = {};
 
 let change = (page) => {};
 

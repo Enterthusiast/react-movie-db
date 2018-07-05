@@ -1,9 +1,10 @@
-import movieService from '../movieService';
-import { EFBIG } from 'constants';
+import movieServiceInitializer from '../movieService';
+
+let movieService = {};
 
 describe('requestWrapper', () => {
-    beforeEach(() => {
-        movieService.reset();
+    beforeEach(async () => {
+        movieService = await movieServiceInitializer(true);
     })
 
     it('fails with empty request', async () => {

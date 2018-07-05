@@ -123,7 +123,11 @@ const movieServiceInitializer = function() {
 
     // initialize
     // load api configuration
-    const serviceInitializer = async function() {
+    const serviceInitializer = async function(skip) {
+        if(skip) {
+            return service;
+        }
+        
         await service.getConfiguration();
         return service;
     }
