@@ -74,7 +74,6 @@ describe('apiErrorConfigStatus and apiErrorStatus', () => {
     });
     it('to render Pagination and MovieList with apiErrorStatus false ', () => {
       const wrapper = mount(<AppWrapper {...props} />);
-      console.log(wrapper.debug())
       expect(wrapper.find('Pagination')).toBeTruthy();
       expect(wrapper.find('MovieList')).toBeTruthy();
     });

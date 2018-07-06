@@ -33,10 +33,29 @@ export function updateApiErrorStatus(apiErrorStatus) {
     return { type: UPDATE_API_ERROR_STATUS, apiErrorStatus }
 }
 
-export function updateApiErrorConfigStatus(apiErrorStatus) {
-    return { type: UPDATE_API_ERROR_CONFIG_STATUS, apiErrorStatus }
+export function updateApiErrorConfigStatus(apiErrorConfigStatus) {
+    return { type: UPDATE_API_ERROR_CONFIG_STATUS, apiErrorConfigStatus }
 }
 
 export function updateApiErrorDetails(apiErrorDetails) {
     return { type: UPDATE_API_ERROR_DETAILS, apiErrorDetails }
+}
+
+export default {
+    CHANGE_PAGE,
+    UPDATE_MOVIE_LIST,
+    UPDATE_MOVIE_DETAILS,
+    CLEAR_MOVIE_DETAILS,
+    UPDATE_API_LOADING_STATUS,
+    UPDATE_API_ERROR_STATUS,
+    UPDATE_API_ERROR_CONFIG_STATUS,
+    UPDATE_API_ERROR_DETAILS,
+    changePage,
+    updateMovieList,
+    updateMovieDetails,
+    clearMovieDetails,
+    updateApiLoadingStatus,
+    updateApiErrorStatus,
+    updateApiErrorConfigStatus,
+    updateApiErrorDetails
 }

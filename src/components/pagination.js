@@ -16,7 +16,6 @@ const Pagination = (props) => <div>
 export default Pagination;
 
 Pagination.propTypes = {
-    updateMovieList: PropTypes.func.isRequired,
     previous: PropTypes.number,
     list: PropTypes.array.isRequired,
     current: PropTypes.number.isRequired,
