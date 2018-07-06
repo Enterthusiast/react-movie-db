@@ -1,4 +1,9 @@
-import { UPDATE_API_LOADING_STATUS, UPDATE_API_ERROR_STATUS, UPDATE_API_ERROR_CONFIG_STATUS, UPDATE_API_ERROR_DETAILS } from '../actions/actions'
+import { 
+    UPDATE_API_LOADING_STATUS,
+    UPDATE_API_ERROR_STATUS,
+    UPDATE_API_ERROR_CONFIG_STATUS,
+    UPDATE_API_ERROR_DETAILS
+} from '../actions/actions'
 
 const initialState = {
     apiLoadingStatus: false,
@@ -22,7 +27,7 @@ const apiStatus = function(state = initialState, action) {
     case UPDATE_API_ERROR_CONFIG_STATUS:
         return {
             ...state,
-            apiErrorStatus: action.apiErrorConfigStatus
+            apiErrorConfigStatus: action.apiErrorConfigStatus
         }
     case UPDATE_API_ERROR_DETAILS:
         return {

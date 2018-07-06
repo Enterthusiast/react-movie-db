@@ -1,4 +1,7 @@
-import { UPDATE_MOVIE_DETAILS, CLEAR_MOVIE_DETAILS } from '../actions/actions'
+import { 
+    UPDATE_MOVIE_DETAILS,
+    CLEAR_MOVIE_DETAILS
+} from '../actions/actions'
 
 const initialState = {}
 
