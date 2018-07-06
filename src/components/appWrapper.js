@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import '../App.css';
 import {ProgressBar, Button} from 'react-materialize';
 import MovieList from '../containers/movie/movieList';
