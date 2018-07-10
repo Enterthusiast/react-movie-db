@@ -42,7 +42,8 @@ class MovieListItem extends Component {
 }
 
 MovieListItem.propTypes = {
-    movieListItem: PropTypes.object.isRequired
+    movieListItem: PropTypes.object.isRequired,
+    observerRefList: PropTypes.array.isRequired
 }
 
 export default MovieListItem;
