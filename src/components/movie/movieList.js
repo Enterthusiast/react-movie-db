@@ -29,6 +29,7 @@ class MovieList extends Component {
                     this.observer.unobserve(entry.target);
                     applyImgSrc(entry.target);
                 }
+                return entry;
             });
         }
 
