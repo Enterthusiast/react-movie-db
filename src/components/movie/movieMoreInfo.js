@@ -6,7 +6,9 @@ import {ProgressBar} from 'react-materialize';
 
 const MovieMoreInfo = (props) => 
     <React.Fragment>
-        {props.movieDetails.title ? 
+        {props.apiStatus.apiLoadingStatus ?
+            <ProgressBar />
+            :
             <div>
                 <div style={{ 
                     with: '100%',
@@ -113,8 +115,6 @@ const MovieMoreInfo = (props) =>
                     </div>
                 </div>
             </div>
-            : 
-            <ProgressBar />
         }
     </React.Fragment>;
 
