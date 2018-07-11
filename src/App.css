@@ -122,24 +122,6 @@
     text-transform: lowercase;
   }
 
-  .App-card-title {
-    overflow: hidden;
-    font-size: 18px;
-    height: 19px;
-  }
-
-  .App-card-overview {
-    display: none;
-  }
-
-  .card .card-content {
-    padding: 5px;
-  }
-
-  .card .card-action {
-    padding: 5px;
-  }
-
   .App-modal-poster {
     width: 94px;
     height: 141.25px;
@@ -165,6 +147,24 @@
   
   .App-modal-movie-date {
     font-size: 18px;
+  }
+
+  .App-card-title {
+    overflow: hidden;
+    font-size: 18px;
+    height: 19px;
+  }
+
+  .App-card-overview {
+    display: none;
+  }
+
+  .card .card-content {
+    padding: 5px;
+  }
+
+  .card .card-action {
+    padding: 5px;
   }
 
 }
