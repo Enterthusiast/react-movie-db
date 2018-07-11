@@ -13,6 +13,7 @@ module.exports = {
           ],
           flexbox: 'no-2009',
         },
+        'postcss-easy-import': {},
         'precss': {},
     },
 }

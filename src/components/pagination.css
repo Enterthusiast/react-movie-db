@@ -1,13 +1,17 @@
-@media only screen and (max-width: 767px) {
+@import '../App.css';
 
-  .App-pagination li a {
-    font-size: 15px;
-    padding: 0 5px;
+.App-pagination {
+  li {
+    a {
+      @media only screen and (max-width: $media-max-mobile) {
+        font-size: 15px;
+        padding: 0 5px;
+      
+        i {
+          margin-top: 3px;
+          font-size: 22px;
+        }
+      }
+    }
   }
-
-  .App-pagination li a i {
-    margin-top: 3px;
-    font-size: 22px;
-  }
-
 }

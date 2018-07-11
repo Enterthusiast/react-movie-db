@@ -1,0 +1,53 @@
+@import '../../App.css';
+
+.App-poster-image {
+    width: 185px;
+    height: 278px;
+
+    @media only screen and (max-width: $media-max-mobile) {
+        width: 94px;
+        min-width: 94px;
+        height: 141.25px;
+    }  
+}
+
+.App-card-title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 300;
+
+    @media only screen and (max-width: $media-max-mobile) {
+        overflow: hidden;
+        font-size: 18px;
+        height: 19px;
+    }
+}
+  
+.App-card-secondary-content {
+    margin: 0 0 8px 0;
+}
+
+.App-card-action {
+    text-align: right;
+}
+
+.App-card-overview {
+    @media only screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+/* Materialize CSS specific */
+.card {
+    .card-content {
+        @media only screen and (max-width: 767px) {
+            padding: 5px;
+        }
+    }
+    
+    .card-action {
+        @media only screen and (max-width: 767px) {
+            padding: 5px;
+        }
+    }
+}
