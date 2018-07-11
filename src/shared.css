@@ -1,0 +1,10 @@
+@import './variable.css';
+
+/* Shared */
+.App-content-text-color {
+  color: $content-text-color;
+}
+
+.App-secondary-text-color {
+  color: $secondary-text-color;
+}

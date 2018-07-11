@@ -1,4 +1,5 @@
-@import '../../App.css';
+@import '../../shared.css';
+@import '../../variable.css';
 
 .App-backdrop-image {
     height: 343px;
