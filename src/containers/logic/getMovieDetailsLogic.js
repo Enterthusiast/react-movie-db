@@ -1,42 +1,42 @@
 import {
-    updateApiLoadingStatus, 
-    updateApiErrorStatus,
-    updateApiErrorConfigStatus,
-    updateApiErrorDetails } from '../../actions/actions'
-import { updateMovieDetails } from '../../actions/actions'
+  updateApiLoadingStatus,
+  updateApiErrorStatus,
+  updateApiErrorConfigStatus,
+  updateApiErrorDetails,
+  updateMovieDetails,
+} from '../../actions/actions';
 import movieServiceInitializer from '../../services/movieService';
 
 const getMovieDetailsLogic = async (dispatch, movieId) => {
-    dispatch(updateApiErrorStatus(false));
-    dispatch(updateApiErrorConfigStatus(false));
+  dispatch(updateApiErrorStatus(false));
+  dispatch(updateApiErrorConfigStatus(false));
 
-    dispatch(updateApiLoadingStatus(true));
+  dispatch(updateApiLoadingStatus(true));
 
-    let movieService = {};
-    try {
-        movieService = await movieServiceInitializer();
-    } catch(error) {
-        dispatch(updateApiErrorDetails(error));
-        dispatch(updateApiErrorStatus(true));
-        dispatch(updateApiErrorConfigStatus(true));
+  let movieService = {};
+  try {
+    movieService = await movieServiceInitializer();
+  } catch (error) {
+    dispatch(updateApiErrorDetails(error));
+    dispatch(updateApiErrorStatus(true));
+    dispatch(updateApiErrorConfigStatus(true));
 
-        dispatch(updateApiLoadingStatus(false));
-    }
+    dispatch(updateApiLoadingStatus(false));
+  }
 
-    try {
-        movieService = await movieServiceInitializer();
-        const movieDetails = await movieService.getMovieDetails(movieId);
-    
-        dispatch(updateMovieDetails(movieDetails));
+  try {
+    movieService = await movieServiceInitializer();
+    const movieDetails = await movieService.getMovieDetails(movieId);
 
-        dispatch(updateApiLoadingStatus(false));
-    } catch(error) {
-        dispatch(updateApiErrorDetails(error));
-        dispatch(updateApiErrorStatus(true));
+    dispatch(updateMovieDetails(movieDetails));
 
-        dispatch(updateApiLoadingStatus(false));
-    }
+    dispatch(updateApiLoadingStatus(false));
+  } catch (error) {
+    dispatch(updateApiErrorDetails(error));
+    dispatch(updateApiErrorStatus(true));
 
-}
+    dispatch(updateApiLoadingStatus(false));
+  }
+};
 
 export default getMovieDetailsLogic;
