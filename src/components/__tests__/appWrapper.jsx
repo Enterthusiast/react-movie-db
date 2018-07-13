@@ -38,13 +38,13 @@ describe('apiLoading', () => {
     props.apiStatus.apiLoadingStatus = true;
 
     const wrapper = mount(<AppWrapper {...props} />);
-    wrapper.setState({ apiLoading: true });
     expect(wrapper).toContainReact(<ProgressBar />);
   });
   it('show placeholder if apiLoadingStatus is false', () => {
+    props.apiStatus.apiLoadingStatus = false;
+
     const wrapper = mount(<AppWrapper {...props} />);
     const selector = '.App-ProgressBar-placeholder';
-    wrapper.setState({ apiLoading: false });
     expect(wrapper.find(selector)).toExist();
   });
 });
