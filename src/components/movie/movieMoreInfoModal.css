@@ -1,0 +1,12 @@
+@import '../../variable.css';
+
+.App-more-button {
+    overflow: hidden;
+
+    @media only screen and (max-width: $media-max-mobile) {
+        overflow: hidden;
+        padding: 0 5px;
+        font-size: 12px;
+        text-transform: lowercase;
+    }
+}

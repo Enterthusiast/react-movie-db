@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import './movieMoreInfo.css'
 
 import {ProgressBar} from 'react-materialize';
 

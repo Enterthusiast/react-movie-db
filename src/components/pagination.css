@@ -1,0 +1,17 @@
+@import '../variable.css';
+
+.App-pagination {
+  li {
+    a {
+      @media only screen and (max-width: $media-max-mobile) {
+        font-size: 15px;
+        padding: 0 5px;
+      
+        i {
+          margin-top: 3px;
+          font-size: 22px;
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import './movieListItem.css';
 
 import MovieMoreInfoModal from '../../containers/movie/movieMoreInfoModal';
 

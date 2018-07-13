@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import './appWrapper.css';
 import {ProgressBar, Button} from 'react-materialize';
 import MovieList from '../containers/movie/movieList';
 import Pagination from '../containers/pagination';

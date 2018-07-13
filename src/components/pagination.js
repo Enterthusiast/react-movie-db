@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './pagination.css';
 
 const Pagination = (props) => <div>
         <ul className="App-pagination pagination center-align">
