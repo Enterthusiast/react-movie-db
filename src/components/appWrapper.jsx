@@ -119,7 +119,7 @@ class AppWrapper extends Component {
 }
 
 AppWrapper.propTypes = {
-  apiStatus: PropTypes.bool.isRequired,
+  apiStatus: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   updateMovieList: PropTypes.func.isRequired,
 };
 
