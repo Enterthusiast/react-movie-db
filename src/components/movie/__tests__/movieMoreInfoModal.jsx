@@ -3,19 +3,20 @@ import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
 
 import MovieMoreInfoModal from '../movieMoreInfoModal';
+
 jest.mock('../../../containers/movie/movieMoreInfo');
 
-let props = {
+const props = {
   movieId: 1,
   getMovieDetails: () => {},
-  clearMovieDetails: () => {}
-}
+  clearMovieDetails: () => {},
+};
 
 describe('render', () => {
   it('shallow renders without crashing', () => {
     shallow(<MovieMoreInfoModal {...props} />);
   });
-  
+
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<MovieMoreInfoModal {...props} />, div);

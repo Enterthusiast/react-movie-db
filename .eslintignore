@@ -1,0 +1,3 @@
+*.css
+src/setupTests.js
+src/registerServiceWorker.js

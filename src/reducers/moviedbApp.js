@@ -5,10 +5,10 @@ import movieDetails from './movieDetails';
 import apiStatus from './apiStatus';
 
 const moviedbApp = combineReducers({
-    movieList,
-    movieListPagination,
-    movieDetails,
-    apiStatus,
+  movieList,
+  movieListPagination,
+  movieDetails,
+  apiStatus,
 });
 
 export default moviedbApp;
